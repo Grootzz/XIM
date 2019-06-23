@@ -19,7 +19,7 @@ public class LoginUtil {
      */
     public static void markAsLogin(Channel channel) {
         /* TODO 去除channel attribute，使用缓存 */
-        // 存入缓存职工
+        // 存入缓存中
         JedisUtils.set(channel.id().toString(), true);
 
         /* TODO 去除 */

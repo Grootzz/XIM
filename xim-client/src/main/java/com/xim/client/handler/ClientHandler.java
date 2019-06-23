@@ -54,7 +54,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         // 登录逻辑
         if (packet instanceof LoginResponsePacket) {
-            System.out.println("--");
+
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet;
 
             if (loginResponsePacket.isSuccess()) {
@@ -71,5 +71,19 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
             MessageResponsePacket messageResponsePacket = (MessageResponsePacket) packet;
             System.out.println(new Date() + ": 收到服务端的消息: " + messageResponsePacket.getMessage());
         }
+    }
+
+    public void print(String action, ByteBuf buffer) {
+        System.out.println("after ===========" + action + "============");
+        System.out.println("capacity(): " + buffer.capacity());
+        System.out.println("maxCapacity(): " + buffer.maxCapacity());
+        System.out.println("readerIndex(): " + buffer.readerIndex());
+        System.out.println("readableBytes(): " + buffer.readableBytes());
+        System.out.println("isReadable(): " + buffer.isReadable());
+        System.out.println("writerIndex(): " + buffer.writerIndex());
+        System.out.println("writableBytes(): " + buffer.writableBytes());
+        System.out.println("isWritable(): " + buffer.isWritable());
+        System.out.println("maxWritableBytes(): " + buffer.maxWritableBytes());
+        System.out.println();
     }
 }

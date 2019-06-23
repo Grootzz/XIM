@@ -36,4 +36,12 @@ public class LoginResponsePacket extends Packet{
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    @Override
+    public String toString() {
+        return "LoginResponsePacket{" +
+                "success=" + success +
+                ", reason='" + reason + '\'' +
+                '}';
+    }
 }

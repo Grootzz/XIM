@@ -26,4 +26,11 @@ public class MessageRequestPacket extends Packet {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "MessageRequestPacket{" +
+                "message='" + message + '\'' +
+                '}';
+    }
 }

@@ -48,6 +48,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 loginResponsePacket.setSuccess(false);
                 System.out.println(new Date() + ": 登录失败!");
             }
+
             // 写数据到客户端: 登录响应
             ByteBuf responseByteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(), loginResponsePacket);
             ctx.channel().writeAndFlush(responseByteBuf);
