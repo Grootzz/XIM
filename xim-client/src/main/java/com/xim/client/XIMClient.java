@@ -1,13 +1,20 @@
 package com.xim.client;
 
 import com.xim.client.handler.ClientHandlerInitializer;
+import com.xim.common.protocol.PacketCodeC;
+import com.xim.common.protocol.req.MessageRequestPacket;
+import com.xim.common.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.util.Date;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -45,12 +52,21 @@ public class XIMClient {
 
     /**
      * 连接服务器
+     *
+     * @param bootstrap
+     * @param host
+     * @param port
+     * @param retry
      */
     private static void connect(Bootstrap bootstrap, String host, int port, int retry) {
         bootstrap.connect(host, port) // 连接服务器
                 .addListener(future -> {
                     if (future.isSuccess()) {
                         System.out.println(new Date() + ": 连接成功!");
+                        // 获取与服务端关联的channel
+                        Channel channel = ((ChannelFuture) future).channel();
+                        // 获取控制台输入信息
+                        startConsoleThread(channel);
                     } else if (retry == 0) {
                         System.err.println("重试次数已用完，放弃连接！");
                     } else {
@@ -66,5 +82,28 @@ public class XIMClient {
                                 .schedule(() -> connect(bootstrap, HOST, PORT, retry - 1), delay, TimeUnit.SECONDS);
                     }
                 });
+    }
+
+    /**
+     * 在客户端连接上服务端之后启动控制台线程，从控制台获取消息，然后发送至服务端
+     *
+     * @param channel
+     */
+    private static void startConsoleThread(Channel channel) {
+        new Thread(()->{
+            while (!Thread.interrupted()){
+                if (LoginUtil.hasLogin(channel)){
+                    System.out.println("输入消息发送至服务端: ");
+
+                    Scanner scanner = new Scanner(System.in);
+                    String meg = scanner.nextLine();
+
+                    MessageRequestPacket packet = new MessageRequestPacket();
+                    packet.setMessage(meg);
+                    ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc(), packet);
+                    channel.writeAndFlush(byteBuf);
+                }
+            }
+        }).start();
     }
 }

@@ -3,7 +3,9 @@ package com.xim.server.handler;
 import com.xim.common.protocol.Packet;
 import com.xim.common.protocol.PacketCodeC;
 import com.xim.common.protocol.req.LoginRequestPacket;
+import com.xim.common.protocol.req.MessageRequestPacket;
 import com.xim.common.protocol.resp.LoginResponsePacket;
+import com.xim.common.protocol.resp.MessageResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -27,8 +29,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         ByteBuf requestByteBuf = (ByteBuf) msg;
 
+        // 解码收到的数据包
         Packet packet = PacketCodeC.INSTANCE.decode(requestByteBuf);
 
+        // 处理登录
         if (packet instanceof LoginRequestPacket) {
             // 登录流程
             LoginRequestPacket loginRequestPacket = (LoginRequestPacket) packet;
@@ -47,6 +51,19 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             // 登录响应
             ByteBuf responseByteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(), loginResponsePacket);
             ctx.channel().writeAndFlush(responseByteBuf);
+
+            // 处理消息
+        } else if (msg instanceof MessageRequestPacket) {
+
+            MessageRequestPacket messageRequestPacket = (MessageRequestPacket) packet;
+            System.out.println(new Date() + ": 收到客户端消息: " + messageRequestPacket.getMessage());
+
+            // 生成相应消息
+            MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
+            messageResponsePacket.setMessage("服务端回复【" + messageRequestPacket.getMessage() + "】");
+
+            ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(), messageResponsePacket);
+            ctx.channel().writeAndFlush(byteBuf);
         }
     }
 

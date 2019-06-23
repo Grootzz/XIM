@@ -4,6 +4,8 @@ import com.xim.common.protocol.Packet;
 import com.xim.common.protocol.PacketCodeC;
 import com.xim.common.protocol.req.LoginRequestPacket;
 import com.xim.common.protocol.resp.LoginResponsePacket;
+import com.xim.common.protocol.resp.MessageResponsePacket;
+import com.xim.common.util.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -47,16 +49,27 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf byteBuf = (ByteBuf) msg;
 
+        // 解码收到的数据包
         Packet packet = PacketCodeC.INSTANCE.decode(byteBuf);
 
+        // 登录逻辑
         if (packet instanceof LoginResponsePacket) {
+
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet;
 
             if (loginResponsePacket.isSuccess()) {
+
                 System.out.println(new Date() + ": 客户端登录成功");
+
+                // 标记 channel 完成登录
+                LoginUtil.markAsLogin(ctx.channel());
             } else {
                 System.out.println(new Date() + ": 客户端登录失败，原因：" + loginResponsePacket.getReason());
             }
+            // 处理收到的消息
+        } else if (packet instanceof MessageResponsePacket) {
+            MessageResponsePacket messageResponsePacket = (MessageResponsePacket) packet;
+            System.out.println(new Date() + ": 收到服务端的消息: " + messageResponsePacket.getMessage());
         }
     }
 }
