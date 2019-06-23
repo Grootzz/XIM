@@ -25,7 +25,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(new Date() + ": 客户端开始登录……");
 
         ByteBuf requestByteBuf = (ByteBuf) msg;
 
@@ -34,6 +33,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         // 处理登录
         if (packet instanceof LoginRequestPacket) {
+            System.out.println(new Date() + ": 收到客户端登录请求……");
             // 登录流程
             LoginRequestPacket loginRequestPacket = (LoginRequestPacket) packet;
 
@@ -48,12 +48,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 loginResponsePacket.setSuccess(false);
                 System.out.println(new Date() + ": 登录失败!");
             }
-            // 登录响应
+            // 写数据到客户端: 登录响应
             ByteBuf responseByteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(), loginResponsePacket);
             ctx.channel().writeAndFlush(responseByteBuf);
 
             // 处理消息
-        } else if (msg instanceof MessageRequestPacket) {
+        } else if (packet instanceof MessageRequestPacket) {
 
             MessageRequestPacket messageRequestPacket = (MessageRequestPacket) packet;
             System.out.println(new Date() + ": 收到客户端消息: " + messageRequestPacket.getMessage());
@@ -62,6 +62,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
             messageResponsePacket.setMessage("服务端回复【" + messageRequestPacket.getMessage() + "】");
 
+            // 写数据到客户端
             ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(ctx.alloc(), messageResponsePacket);
             ctx.channel().writeAndFlush(byteBuf);
         }

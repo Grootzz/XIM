@@ -20,8 +20,11 @@
     <properties>
         <netty-all.version>4.1.6.Final</netty-all.version>
         <fastjson.version>1.2.29</fastjson.version>
+        <redis.version>2.9.3</redis.version>
+        <pool.version>1.6</pool.version>
         <lombok.version>1.16.12</lombok.version>
         <junit.version>4.12</junit.version>
+
     </properties>
 
     <dependencyManagement>
@@ -43,6 +46,18 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${redis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-pool</groupId>
+                <artifactId>commons-pool</artifactId>
+                <version>${pool.version}</version>
             </dependency>
 
         </dependencies>

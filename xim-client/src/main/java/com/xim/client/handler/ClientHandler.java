@@ -54,7 +54,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         // 登录逻辑
         if (packet instanceof LoginResponsePacket) {
-
+            System.out.println("--");
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet;
 
             if (loginResponsePacket.isSuccess()) {

@@ -27,7 +27,7 @@ public class XIMClient {
 
     private static final int MAX_RETRY = 5;
     private static final String HOST = "127.0.0.1";
-    private static final int PORT = 8000;
+    private static final int PORT = 3333;
 
     public static void main(String[] args) {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -62,7 +62,7 @@ public class XIMClient {
         bootstrap.connect(host, port) // 连接服务器
                 .addListener(future -> {
                     if (future.isSuccess()) {
-                        System.out.println(new Date() + ": 连接成功!");
+                        System.out.println(new Date() + ": 连接成功，启动控制台线程……");
                         // 获取与服务端关联的channel
                         Channel channel = ((ChannelFuture) future).channel();
                         // 获取控制台输入信息
@@ -79,7 +79,7 @@ public class XIMClient {
 
                         bootstrap.config()
                                 .group()
-                                .schedule(() -> connect(bootstrap, HOST, PORT, retry - 1), delay, TimeUnit.SECONDS);
+                                .schedule(() -> connect(bootstrap, host, port, retry - 1), delay, TimeUnit.SECONDS);
                     }
                 });
     }

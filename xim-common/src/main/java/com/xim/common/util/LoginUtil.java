@@ -1,6 +1,7 @@
 package com.xim.common.util;
 
 import com.xim.common.attribute.Attributes;
+import com.xim.common.redis.JedisUtils;
 import io.netty.channel.Channel;
 
 /**
@@ -17,6 +18,11 @@ public class LoginUtil {
      * @param channel
      */
     public static void markAsLogin(Channel channel) {
+        /* TODO 去除channel attribute，使用缓存 */
+        // 存入缓存职工
+        JedisUtils.set(channel.id().toString(), true);
+
+        /* TODO 去除 */
         channel.attr(Attributes.LOGON).set(true);
     }
 
@@ -27,7 +33,9 @@ public class LoginUtil {
      * @return
      */
     public static boolean hasLogin(Channel channel) {
+        Boolean login0 = JedisUtils.get(channel.id().toString(), boolean.class);
+        /* TODO 去除 */
         Boolean login = channel.attr(Attributes.LOGON).get();
-        return login;
+        return login0;
     }
 }

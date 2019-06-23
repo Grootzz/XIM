@@ -17,7 +17,7 @@ import java.util.Date;
  */
 public class XIMServer {
 
-    private static final int PORT = 8000;
+    private static final int PORT = 3333;
 
     public static void main(String[] args) {
 
