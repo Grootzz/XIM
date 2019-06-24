@@ -66,6 +66,28 @@ public class PacketCodeC {
     }
 
     /**
+     * 编码
+     *
+     * @param packet  数据包
+     * @param byteBuf 编码后的bytebuf
+     * @return
+     */
+    public void encode(Packet packet, ByteBuf byteBuf) {
+
+        // 1. 序列化 java 对象
+        byte[] bytes = Serializer.DEFAULT.serialize(packet);
+
+        // 2. 实际编码过程
+        byteBuf.writeInt(MAGIC_NUMBER);
+        byteBuf.writeByte(packet.getVersion());
+        byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlgorithmId());
+        byteBuf.writeByte(packet.getCommand());
+        byteBuf.writeInt(bytes.length);
+        byteBuf.writeBytes(bytes);
+
+    }
+
+    /**
      * 数据包解码
      *
      * @param byteBuf 数据包
@@ -95,7 +117,7 @@ public class PacketCodeC {
         Class<? extends Packet> requestType = getRequestType(command);
         Serializer serializer = getSerializer(serializeAlgorithm);
 
-        // 获取数据包中的数据
+        // 获取数据包中的数据 ( packet 对象)
         if (requestType != null && serializer != null) {
             return serializer.deserialize(requestType, bytes);
         }

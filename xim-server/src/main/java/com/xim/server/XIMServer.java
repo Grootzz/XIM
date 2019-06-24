@@ -29,10 +29,10 @@ public class XIMServer {
 
             bootstrap
                     .group(bossGroup, workerGroup) // 设置线程模型
-                    .channel(NioServerSocketChannel.class)
+                    .channel(NioServerSocketChannel.class) // 指定 channel 实例
                     .option(ChannelOption.SO_BACKLOG, 1024) // 临时存放已完成三次握手的请求的队列的最大长度
                     .childOption(ChannelOption.SO_KEEPALIVE, true) // 开启TCP底层心跳机制
-                    .childOption(ChannelOption.TCP_NODELAY, true) // 开启 Nagle 算法
+                    .childOption(ChannelOption.TCP_NODELAY, true) // 开启 Nagle 算法（用于流量控制）
                     .childHandler(new ServerHandlerInitializer());
 
             bind(bootstrap, PORT);
