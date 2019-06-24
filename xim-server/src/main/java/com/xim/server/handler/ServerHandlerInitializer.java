@@ -2,6 +2,7 @@ package com.xim.server.handler;
 
 import com.xim.common.codec.PacketDecoder;
 import com.xim.common.codec.PacketEncoder;
+import com.xim.common.codec.Spilter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -21,6 +22,7 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         ChannelPipeline pipeline = ch.pipeline();
 
         /* inbound handler*/
+        pipeline.addLast(new Spilter());
         pipeline.addLast(new PacketDecoder());
         pipeline.addLast(new LoginRequestHandler());
         pipeline.addLast(new MessageRequestHandler());
