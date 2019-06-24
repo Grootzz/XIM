@@ -27,6 +27,9 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         pipeline.addLast(new LoginRequestHandler());
         pipeline.addLast(new AuthHandler());
         pipeline.addLast(new MessageRequestHandler());
+        pipeline.addLast(new CreateGroupRequestHandler());
+        pipeline.addLast(new LogoutRequestHandler());
+
 
         /* outbound handler */
         pipeline.addLast(new PacketEncoder());

@@ -54,7 +54,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        SessionUtil.unbindSeesion(ctx.channel());
+        SessionUtil.unBindSession(ctx.channel());
     }
 
     /**

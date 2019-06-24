@@ -27,7 +27,7 @@ public class SessionUtil {
     /**
      * 解绑
      */
-    public static void unbindSeesion(Channel channel) {
+    public static void unBindSession(Channel channel) {
         if (LoginUtil.hasLogin(channel)) {
             userIdChannelMap.remove(getSession(channel).getUserId());
             LoginUtil.logout(channel);

@@ -1,8 +1,12 @@
 package com.xim.common.protocol;
 
+import com.xim.common.protocol.req.CreateGroupRequestPacket;
 import com.xim.common.protocol.req.LoginRequestPacket;
+import com.xim.common.protocol.req.LogoutRequestPacket;
 import com.xim.common.protocol.req.MessageRequestPacket;
+import com.xim.common.protocol.resp.CreateGroupResponsePacket;
 import com.xim.common.protocol.resp.LoginResponsePacket;
+import com.xim.common.protocol.resp.LogoutResponsePacket;
 import com.xim.common.protocol.resp.MessageResponsePacket;
 import com.xim.common.serialize.Serializer;
 import com.xim.common.serialize.impl.JSONSerializer;
@@ -34,6 +38,10 @@ public class PacketCodeC {
         packetTypeMap.put(Command.LOGIN_RESPONSE, LoginResponsePacket.class);
         packetTypeMap.put(Command.MESSAGE_REQUEST, MessageRequestPacket.class);
         packetTypeMap.put(Command.MESSAGE_RESPONSE, MessageResponsePacket.class);
+        packetTypeMap.put(Command.LOGOUT_REQUEST, LogoutRequestPacket.class);
+        packetTypeMap.put(Command.LOGOUT_RESPONSE, LogoutResponsePacket.class);
+        packetTypeMap.put(Command.CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        packetTypeMap.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
