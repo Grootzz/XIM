@@ -24,10 +24,21 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         /* inbound handler*/
         pipeline.addLast(new Spilter());
         pipeline.addLast(new PacketDecoder());
+        // 登录请求处理器
         pipeline.addLast(new LoginRequestHandler());
+        // 权限处理器
         pipeline.addLast(new AuthHandler());
+        // 单聊消息请求处理器
         pipeline.addLast(new MessageRequestHandler());
+        // 创建群请求处理器
         pipeline.addLast(new CreateGroupRequestHandler());
+        // 加群请求处理器
+        pipeline.addLast(new JoinGroupRequestHandler());
+        // 退群请求处理器
+        pipeline.addLast(new QuitGroupRequestHandler());
+        // 获取群成员请求处理器
+        pipeline.addLast(new ListGroupMembersRequestHandler());
+        // 登出请求处理器
         pipeline.addLast(new LogoutRequestHandler());
 
 

@@ -28,22 +28,52 @@ public interface Command {
     Byte MESSAGE_RESPONSE = 4;
 
     /**
-     * 登出请求
+     * 登出请求指令
      */
     Byte LOGOUT_REQUEST = 5;
 
     /**
-     * 退出响应
+     * 退出响应指令
      */
     Byte LOGOUT_RESPONSE = 6;
 
     /**
-     * 创建群组请求
+     * 创建群组请求指令
      */
     Byte CREATE_GROUP_REQUEST = 7;
 
     /**
-     * 创建群组响应
+     * 创建群组响应指令
      */
     Byte CREATE_GROUP_RESPONSE = 8;
+
+    /**
+     * 列出群成员请求指令
+     */
+    Byte LIST_GROUP_MEMBERS_REQUEST = 9;
+
+    /**
+     * 列出群成员响应指令
+     */
+    Byte LIST_GROUP_MEMBERS_RESPONSE = 10;
+
+    /**
+     * 加入群聊请求指令
+     */
+    Byte JOIN_GROUP_REQUEST = 11;
+
+    /**
+     * 加入群聊请求响应指令
+     */
+    Byte JOIN_GROUP_RESPONSE = 12;
+
+    /**
+     * 退出群聊请求指令
+     */
+    Byte QUIT_GROUP_REQUEST = 13;
+
+    /**
+     * 退出群聊请求指令
+     */
+    Byte QUIT_GROUP_RESPONSE = 14;
 }

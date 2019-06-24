@@ -1,13 +1,7 @@
 package com.xim.common.protocol;
 
-import com.xim.common.protocol.req.CreateGroupRequestPacket;
-import com.xim.common.protocol.req.LoginRequestPacket;
-import com.xim.common.protocol.req.LogoutRequestPacket;
-import com.xim.common.protocol.req.MessageRequestPacket;
-import com.xim.common.protocol.resp.CreateGroupResponsePacket;
-import com.xim.common.protocol.resp.LoginResponsePacket;
-import com.xim.common.protocol.resp.LogoutResponsePacket;
-import com.xim.common.protocol.resp.MessageResponsePacket;
+import com.xim.common.protocol.req.*;
+import com.xim.common.protocol.resp.*;
 import com.xim.common.serialize.Serializer;
 import com.xim.common.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -42,6 +36,12 @@ public class PacketCodeC {
         packetTypeMap.put(Command.LOGOUT_RESPONSE, LogoutResponsePacket.class);
         packetTypeMap.put(Command.CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
         packetTypeMap.put(Command.CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
+        packetTypeMap.put(Command.JOIN_GROUP_REQUEST, JoinGroupRequestPacket.class);
+        packetTypeMap.put(Command.JOIN_GROUP_RESPONSE, JoinGroupResponsePacket.class);
+        packetTypeMap.put(Command.QUIT_GROUP_REQUEST, QuitGroupRequestPacket.class);
+        packetTypeMap.put(Command.QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
+        packetTypeMap.put(Command.LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
+        packetTypeMap.put(Command.LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();
