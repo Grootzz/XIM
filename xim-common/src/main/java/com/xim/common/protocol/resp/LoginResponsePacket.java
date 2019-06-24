@@ -9,7 +9,11 @@ import com.xim.common.protocol.Packet;
  * @author noodle
  * @date 2019/6/23 16:37
  */
-public class LoginResponsePacket extends Packet{
+public class LoginResponsePacket extends Packet {
+
+    private String userId;
+
+    private String userName;
 
     private boolean success;
 
@@ -37,10 +41,28 @@ public class LoginResponsePacket extends Packet{
         this.reason = reason;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     @Override
     public String toString() {
         return "LoginResponsePacket{" +
-                "success=" + success +
+                "userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", success=" + success +
                 ", reason='" + reason + '\'' +
                 '}';
     }
