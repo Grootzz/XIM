@@ -92,7 +92,7 @@ public class XIMClient {
     private static void startConsoleThread(Channel channel) {
         new Thread(()->{
             while (!Thread.interrupted()){
-                if (LoginUtil.hasLogin(channel)){
+//                if (LoginUtil.hasLogin(channel)){
                     System.out.println("输入消息发送至服务端: ");
 
                     Scanner scanner = new Scanner(System.in);
@@ -102,7 +102,7 @@ public class XIMClient {
                     packet.setMessage(meg);
                     ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc(), packet);
                     channel.writeAndFlush(byteBuf);
-                }
+//                }
             }
         }).start();
     }
