@@ -3,6 +3,7 @@ package com.xim.common.util;
 import com.xim.common.attribute.Attributes;
 import com.xim.common.redis.JedisUtils;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerAdapter;
 
 /**
  * 登录验证工具
@@ -37,5 +38,17 @@ public class LoginUtil {
         /* TODO 去除 */
         Boolean login = channel.attr(Attributes.LOGON).get();
         return login0;
+    }
+
+    /**
+     * 登出
+     *
+     * @param channel
+     */
+    public static void logout(Channel channel) {
+
+        boolean delete = JedisUtils.delete(channel.id().toString());
+
+        channel.attr(Attributes.LOGON).set(null);
     }
 }

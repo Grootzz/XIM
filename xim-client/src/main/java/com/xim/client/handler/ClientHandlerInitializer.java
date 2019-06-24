@@ -28,6 +28,6 @@ public class ClientHandlerInitializer extends ChannelInitializer<SocketChannel> 
         pipeline.addLast(new MessageResponseHandler());// 添加消息响应处理器
 
         /* outbound handler */
-        pipeline.addLast(new PacketEncoder());
+        pipeline.addLast(new PacketEncoder()); // 添加编码处理器
     }
 }

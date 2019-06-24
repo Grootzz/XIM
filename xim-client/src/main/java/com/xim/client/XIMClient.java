@@ -2,6 +2,7 @@ package com.xim.client;
 
 import com.xim.client.handler.ClientHandlerInitializer;
 import com.xim.common.protocol.PacketCodeC;
+import com.xim.common.protocol.req.LoginRequestPacket;
 import com.xim.common.protocol.req.MessageRequestPacket;
 import com.xim.common.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
@@ -90,20 +91,41 @@ public class XIMClient {
      * @param channel
      */
     private static void startConsoleThread(Channel channel) {
-        new Thread(()->{
-            while (!Thread.interrupted()){
-//                if (LoginUtil.hasLogin(channel)){
-                    System.out.println("输入消息发送至服务端: ");
 
-                    Scanner scanner = new Scanner(System.in);
-                    String meg = scanner.nextLine();
+        new Thread(() -> {
 
-                    MessageRequestPacket packet = new MessageRequestPacket();
-                    packet.setMessage(meg);
-                    ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc(), packet);
-                    channel.writeAndFlush(byteBuf);
-//                }
+            Scanner scanner = new Scanner(System.in);
+
+            while (!Thread.interrupted()) {
+                if (LoginUtil.hasLogin(channel)) {
+
+                    String toUserId = scanner.next();
+                    String message = scanner.next();
+                    channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
+
+                } else {
+                    System.out.print("输入用户名登录: ");
+                    String username = scanner.nextLine();
+
+                    LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+                    loginRequestPacket.setUserName(username);
+
+                    // 密码使用默认
+                    loginRequestPacket.setPassword("admin");
+
+                    // 发送登录数据包
+                    channel.writeAndFlush(loginRequestPacket);
+                    waitForLoginResponse();
+                }
             }
         }).start();
+    }
+
+    private static void waitForLoginResponse() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ignored) {
+            ignored.getMessage();
+        }
     }
 }

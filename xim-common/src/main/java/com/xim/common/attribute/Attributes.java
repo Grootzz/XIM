@@ -1,5 +1,6 @@
 package com.xim.common.attribute;
 
+import com.xim.common.session.Session;
 import io.netty.util.AttributeKey;
 
 /**
@@ -14,4 +15,8 @@ public interface Attributes {
      */
     AttributeKey<Boolean> LOGON = AttributeKey.newInstance("login");
 
+    /**
+     * channel 用户session的key
+     */
+    AttributeKey<Session> SESSION = AttributeKey.newInstance("session");
 }

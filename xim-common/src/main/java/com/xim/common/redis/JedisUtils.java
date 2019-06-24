@@ -74,4 +74,13 @@ public class JedisUtils {
         return result;
     }
 
+
+    public static boolean delete(String key) {
+        Jedis jedis = pool.getResource();
+
+        Long del = jedis.del(key);
+        jedis.close();
+        return del > 0;
+    }
+
 }
