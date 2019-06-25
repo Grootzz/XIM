@@ -1,6 +1,7 @@
 package com.xim.common.handler;
 
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPromise;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 空闲状态事件处理器
  * 继承自 IdleStateHandler，定义检测到假死连接之后的逻辑
+ * 这个类是: inbound & outbound
  *
  * @author noodle
  * @date 2019/6/25 15:37
@@ -38,5 +40,7 @@ public class XIMIdleStateHandler extends IdleStateHandler {
         System.out.println(READER_IDLE_TIME + "秒内未读到数据，关闭连接");
         ctx.channel().close();
     }
+
+
 }
 
