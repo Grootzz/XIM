@@ -49,12 +49,17 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         ctx.channel().writeAndFlush(loginResponsePacket);
     }
 
+
     /**
      * 连接断开时解绑session
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        SessionUtil.unBindSession(ctx.channel());
+         SessionUtil.unBindSession(ctx.channel());
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
     }
 
     /**

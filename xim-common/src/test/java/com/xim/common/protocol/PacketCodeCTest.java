@@ -16,7 +16,7 @@ public class PacketCodeCTest {
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
 
         loginRequestPacket.setVersion((byte) 1);
-        loginRequestPacket.setUserId("" + 000);
+//        loginRequestPacket.setUserId("" + 000);
         loginRequestPacket.setUserName("admin");
         loginRequestPacket.setPassword("admin");
 

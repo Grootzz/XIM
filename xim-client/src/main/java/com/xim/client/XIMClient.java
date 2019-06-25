@@ -30,7 +30,7 @@ public class XIMClient {
 
     private static final int MAX_RETRY = 5;
     private static final String HOST = "127.0.0.1";
-    private static final int PORT = 3333;
+    private static final int PORT = 4444;
 
     public static void main(String[] args) {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -43,7 +43,7 @@ public class XIMClient {
                     .channel(NioSocketChannel.class)
                     .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000) // 连接的超时时间，超过这个时间还是建立不上的话则代表连接失败
                     .option(ChannelOption.SO_KEEPALIVE, true) // 开启 TCP 底层心跳机制
-                    .option(ChannelOption.TCP_NODELAY, true) //  开启 Nagle 算法
+                    .option(ChannelOption.TCP_NODELAY, true) //  开启 Nagle 算法（流量控制算法）
                     .handler(new ClientHandlerInitializer());// 添加请求处理器
 
             connect(bootstrap, HOST, PORT, MAX_RETRY);

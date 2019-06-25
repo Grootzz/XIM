@@ -2,7 +2,7 @@ package com.xim.client.handler;
 
 import com.xim.common.codec.PacketDecoder;
 import com.xim.common.codec.PacketEncoder;
-import com.xim.common.codec.Spilter;
+import com.xim.common.codec.Spliter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -23,7 +23,7 @@ public class ClientHandlerInitializer extends ChannelInitializer<SocketChannel> 
 
         /* inbound handler */
         // 添加拆包器
-        pipeline.addLast(new Spilter());
+        pipeline.addLast(new Spliter());
         // 添加Packet解码器
         pipeline.addLast(new PacketDecoder());
         // 添加登录响应处理器
@@ -42,6 +42,7 @@ public class ClientHandlerInitializer extends ChannelInitializer<SocketChannel> 
         pipeline.addLast(new LogoutResponseHandler());
 
         /* outbound handler */
-        pipeline.addLast(new PacketEncoder()); // 添加编码处理器
+        // 添加编码处理器
+        pipeline.addLast(new PacketEncoder());
     }
 }

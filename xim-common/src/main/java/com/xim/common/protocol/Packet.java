@@ -37,4 +37,11 @@ public abstract class Packet {
     public void setVersion(Byte version) {
         this.version = version;
     }
+
+    @Override
+    public String toString() {
+        return "Packet{" +
+                "version=" + version +
+                '}';
+    }
 }

@@ -12,19 +12,19 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
  * @author noodle
  * @date 2019/6/24 15:47
  */
-public class Spilter extends LengthFieldBasedFrameDecoder {
+public class Spliter extends LengthFieldBasedFrameDecoder {
 
     private static final int LENGTH_FIELD_OFFSET = 7;
     private static final int LENGTH_FIELD_LENGTH = 4;
 
-    public Spilter() {
+    public Spliter() {
         super(Integer.MAX_VALUE, LENGTH_FIELD_OFFSET, LENGTH_FIELD_LENGTH);
     }
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
 
-        // 使员工魔数识别数据, 拒绝非本协议的数据包
+        // 使用魔数识别数据, 拒绝非本协议的数据包
         if (in.getInt(in.readerIndex()) != PacketCodeC.MAGIC_NUMBER) {
             ctx.channel().close();
             return null;

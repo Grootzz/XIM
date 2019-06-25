@@ -17,11 +17,11 @@ public class LoginRequestPacket extends Packet {
 
     private String password;
 
+
     @Override
     public Byte getCommand() {
         return Command.LOGIN_REQUEST;
     }
-
 
     public String getUserId() {
         return userId;
@@ -43,10 +43,6 @@ public class LoginRequestPacket extends Packet {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return "LoginRequestPacket{" +
@@ -55,4 +51,9 @@ public class LoginRequestPacket extends Packet {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

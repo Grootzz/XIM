@@ -13,6 +13,8 @@ public class Session {
 
     private String userName;
 
+    public Session() {
+    }
 
     public Session(String userId, String userName) {
         this.userId = userId;
@@ -37,9 +39,6 @@ public class Session {
 
     @Override
     public String toString() {
-        return "Session{" +
-                "userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
-                '}';
+        return userId + ":" + userName;
     }
 }
