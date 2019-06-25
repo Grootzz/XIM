@@ -3,6 +3,7 @@ package com.xim.server.handler;
 import com.xim.common.codec.PacketDecoder;
 import com.xim.common.codec.PacketEncoder;
 import com.xim.common.codec.Spliter;
+import com.xim.common.handler.XIMIdleStateHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -21,10 +22,16 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         ChannelPipeline pipeline = ch.pipeline();
 
         /* inbound handler*/
+        // 空闲状态处理器
+        pipeline.addLast(new XIMIdleStateHandler());
+        // 粘包处理器
         pipeline.addLast(new Spliter());
+        // Packet解码器
         pipeline.addLast(new PacketDecoder());
         // 登录请求处理器
         pipeline.addLast(new LoginRequestHandler());
+        // 心跳请求处理器
+        pipeline.addLast(new HeartBeatRequestHandler());
         // 权限处理器
         pipeline.addLast(new AuthHandler());
         // 单聊消息请求处理器
@@ -40,7 +47,6 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         // 消息群发请求处理器
         pipeline.addLast(new GroupMessageRequestHandler());
         // 登出请求处理器
-        pipeline.addLast(new LogoutRequestHandler());
 
         /* outbound handler */
         pipeline.addLast(new PacketEncoder());

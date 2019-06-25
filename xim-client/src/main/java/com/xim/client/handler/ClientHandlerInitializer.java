@@ -3,6 +3,7 @@ package com.xim.client.handler;
 import com.xim.common.codec.PacketDecoder;
 import com.xim.common.codec.PacketEncoder;
 import com.xim.common.codec.Spliter;
+import com.xim.common.handler.XIMIdleStateHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -22,6 +23,9 @@ public class ClientHandlerInitializer extends ChannelInitializer<SocketChannel> 
         ChannelPipeline pipeline = ch.pipeline();
 
         /* inbound handler */
+        // 空闲检测
+        pipeline.addLast(new XIMIdleStateHandler());
+        pipeline.addLast(new HeartBeatTimerHandler());
         // 添加拆包器
         pipeline.addLast(new Spliter());
         // 添加Packet解码器
@@ -45,6 +49,9 @@ public class ClientHandlerInitializer extends ChannelInitializer<SocketChannel> 
 
         /* outbound handler */
         // 添加编码处理器
+
         pipeline.addLast(new PacketEncoder());
+        // 心跳检测(注释掉可用于测试服务端设置的读空闲最大时间)
+         //pipeline.addLast(new HeartBeatTimerHandler());
     }
 }
