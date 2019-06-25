@@ -73,7 +73,17 @@ public interface Command {
     Byte QUIT_GROUP_REQUEST = 13;
 
     /**
-     * 退出群聊请求指令
+     * 退出群聊请求响应指令
      */
     Byte QUIT_GROUP_RESPONSE = 14;
+
+    /**
+     * 消息群发请求命令
+     */
+    Byte GROUP_MESSAGE_REQUEST = 15;
+
+    /**
+     * 消息群发请求响应命令
+     */
+    Byte GROUP_MESSAGE_RESPONSE = 16;
 }

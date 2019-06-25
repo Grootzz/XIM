@@ -37,6 +37,8 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         pipeline.addLast(new QuitGroupRequestHandler());
         // 获取群成员请求处理器
         pipeline.addLast(new ListGroupMembersRequestHandler());
+        // 消息群发请求处理器
+        pipeline.addLast(new GroupMessageRequestHandler());
         // 登出请求处理器
         pipeline.addLast(new LogoutRequestHandler());
 
@@ -44,7 +46,4 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         pipeline.addLast(new PacketEncoder());
 
     }
-
-
-
 }
