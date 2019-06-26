@@ -6,6 +6,7 @@ import com.xim.client.handler.ClientHandlerInitializer;
 import com.xim.common.protocol.PacketCodeC;
 import com.xim.common.protocol.req.LoginRequestPacket;
 import com.xim.common.protocol.req.MessageRequestPacket;
+import com.xim.common.util.DateUtils;
 import com.xim.common.util.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -15,6 +16,8 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -28,11 +31,18 @@ import java.util.concurrent.TimeUnit;
  */
 public class XIMClient {
 
+    private static final InternalLogger logger = InternalLoggerFactory.getInstance(XIMClient.class);
+
     private static final int MAX_RETRY = 5;
     private static final String HOST = "127.0.0.1";
     private static final int PORT = 4444;
 
     public static void main(String[] args) {
+
+        System.out.println("****************************************************************");
+        System.out.println("*                         启动 XIM 客户端                       *");
+        System.out.println("****************************************************************");
+
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         try {
@@ -62,29 +72,30 @@ public class XIMClient {
      * @param retry
      */
     private static void connect(Bootstrap bootstrap, String host, int port, int retry) {
-        bootstrap.connect(host, port) // 连接服务器
-                .addListener(future -> {
-                    if (future.isSuccess()) {
-                        System.out.println(new Date() + ": 连接成功，启动控制台线程……");
-                        // 获取与服务端关联的channel
-                        Channel channel = ((ChannelFuture) future).channel();
-                        // 获取控制台输入信息
-                        startConsoleThread(channel);
-                    } else if (retry == 0) {
-                        System.err.println("重试次数已用完，放弃连接！");
-                    } else {
-                        // 第几次重连
-                        int order = (MAX_RETRY - retry) + 1;
+        // 连接服务器
+        ChannelFuture channelFuture = bootstrap.connect(host, port);
 
-                        // 本次重连的时间间隔, 指数分布
-                        int delay = 1 << order;
-                        System.err.println(new Date() + ": 连接失败，第" + order + "次重连……");
+        channelFuture.addListener(future -> {
+            if (future.isSuccess()) {
+                System.out.println(DateUtils.date() + " 与服务器建立连接成功，启动控制台线程");
+                // 获取与服务端关联的channel
+                Channel channel = ((ChannelFuture) future).channel();
+                // 获取控制台输入信息
+                startConsoleThread(channel);
+            } else if (retry == 0) {
+                System.err.println(DateUtils.date() + " 重试次数已用完，放弃连接！");
+            } else {
+                // 第几次重连
+                int order = (MAX_RETRY - retry) + 1;
 
-                        bootstrap.config()
-                                .group()
-                                .schedule(() -> connect(bootstrap, host, port, retry - 1), delay, TimeUnit.SECONDS);
-                    }
-                });
+                // 本次重连的时间间隔, 指数分布
+                int delay = 1 << order;
+                System.err.println(DateUtils.date() + " 连接失败，第" + order + "次重连……");
+
+                EventLoopGroup eventExecutors = bootstrap.config().group();
+                eventExecutors.schedule(() -> connect(bootstrap, host, port, retry - 1), delay, TimeUnit.SECONDS);
+            }
+        });
     }
 
     /**
@@ -102,11 +113,13 @@ public class XIMClient {
 
             /* 接收控制台命令 */
             while (!Thread.interrupted()) {
+                //System.out.print("~>");
                 if (!LoginUtil.hasLogin(channel)) {
                     loginConsoleCommand.exec(scanner, channel);
                 } else {
                     consoleCommandManager.exec(scanner, channel);
                 }
+                //consoleCommandManager.exec(scanner, channel);
             }
         }).start();
     }
