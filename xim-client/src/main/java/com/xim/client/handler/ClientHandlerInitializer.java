@@ -7,6 +7,8 @@ import com.xim.common.handler.XIMIdleStateHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 
 /**
@@ -52,6 +54,8 @@ public class ClientHandlerInitializer extends ChannelInitializer<SocketChannel> 
         // 添加编码处理器
         pipeline.addLast(new PacketEncoder());
         // 心跳检测(注释掉可用于测试服务端设置的读空闲最大时间)
-         //pipeline.addLast(new HeartBeatTimerHandler());
+        //pipeline.addLast(new HeartBeatTimerHandler());
+        // 日志处理器
+        pipeline.addLast(new LoggingHandler(LogLevel.DEBUG));
     }
 }

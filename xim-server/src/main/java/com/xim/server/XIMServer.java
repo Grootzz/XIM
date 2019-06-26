@@ -1,5 +1,6 @@
 package com.xim.server;
 
+import com.xim.common.util.DateUtils;
 import com.xim.server.handler.ServerHandlerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
@@ -8,8 +9,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-
-import java.util.Date;
 
 /**
  * xim 服务端
@@ -40,8 +39,8 @@ public class XIMServer {
 
             bind(bootstrap, PORT);
         } finally {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
+            //bossGroup.shutdownGracefully();
+            //workerGroup.shutdownGracefully();
         }
     }
 
@@ -52,9 +51,9 @@ public class XIMServer {
         bootstrap.bind(port) // 绑定端口
                 .addListener(future -> {
                     if (future.isSuccess()) {
-                        System.out.println(new Date() + ": 端口[" + port + "]绑定成功!");
+                        System.out.println(DateUtils.date() + " 服务器启动成功, 端口[" + port + "]");
                     } else {
-                        System.err.println("端口[" + port + "]绑定失败!");
+                        System.err.println(DateUtils.date() + " 服务器启动失败, 端口[" + port + "]");
                     }
                 });
     }
