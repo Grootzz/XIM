@@ -14,8 +14,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 public class HeartBeatRequestHandler extends SimpleChannelInboundHandler<HeartBeatRequestPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HeartBeatRequestPacket msg) throws Exception {
+        System.out.println("pong");
         ctx.channel().writeAndFlush(new HeartBeatResponsePacket());
-        System.out.println("received heartbeat...");
         //ctx.writeAndFlush(new HeartBeatResponsePacket());
     }
 }

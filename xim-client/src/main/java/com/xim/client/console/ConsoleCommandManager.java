@@ -23,13 +23,22 @@ public class ConsoleCommandManager implements ConsoleCommand{
     public ConsoleCommandManager() {
         consoleCommandMap = new HashMap<>();
 
-        consoleCommandMap.put("sendToUser", new SendToUserConsoleCommand());
-        consoleCommandMap.put("logout", new LogoutConsoleCommand());
-        consoleCommandMap.put("createGroup", new CreateGroupConsoleCommand());
-        consoleCommandMap.put("joinGroup", new JoinGroupConsoleCommand());
-        consoleCommandMap.put("quitGroup", new QuitGroupConsoleCommand());
-        consoleCommandMap.put("listGroupMembers", new ListGroupMembersConsoleCommand());
-        consoleCommandMap.put("sendToGroup", new SendToGroupConsoleCommand());
+//        consoleCommandMap.put("sendToUser", new SendToUserConsoleCommand());
+//        consoleCommandMap.put("logout", new LogoutConsoleCommand());
+//        consoleCommandMap.put("createGroup", new CreateGroupConsoleCommand());
+//        consoleCommandMap.put("joinGroup", new JoinGroupConsoleCommand());
+//        consoleCommandMap.put("quitGroup", new QuitGroupConsoleCommand());
+//        consoleCommandMap.put("listGroupMembers", new ListGroupMembersConsoleCommand());
+//        consoleCommandMap.put("sendToGroup", new SendToGroupConsoleCommand());
+
+//        consoleCommandMap.put(":xim",new );
+        consoleCommandMap.put(":logout", new LogoutConsoleCommand());
+        consoleCommandMap.put(":cg", new CreateGroupConsoleCommand());
+        consoleCommandMap.put(":jg", new JoinGroupConsoleCommand());
+        consoleCommandMap.put(":qg", new QuitGroupConsoleCommand());
+        consoleCommandMap.put(":lqm", new ListGroupMembersConsoleCommand());
+        consoleCommandMap.put(":pc", new SendToUserConsoleCommand());
+        consoleCommandMap.put(":gc", new SendToGroupConsoleCommand());
     }
 
     @Override
