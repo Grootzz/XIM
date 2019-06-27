@@ -22,4 +22,9 @@ public class JoinGroupConsoleCommand implements ConsoleCommand {
         joinGroupRequestPacket.setGroupId(groupId);
         channel.writeAndFlush(joinGroupRequestPacket);
     }
+
+    @Override
+    public void exec(String statement, Channel channel) {
+
+    }
 }

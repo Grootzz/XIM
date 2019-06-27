@@ -22,4 +22,9 @@ public class ListGroupMembersConsoleCommand implements ConsoleCommand{
         listGroupMembersRequestPacket.setGroupId(groupId);
         channel.writeAndFlush(listGroupMembersRequestPacket);
     }
+
+    @Override
+    public void exec(String statement, Channel channel) {
+
+    }
 }

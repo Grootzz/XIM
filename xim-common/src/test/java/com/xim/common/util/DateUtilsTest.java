@@ -10,6 +10,6 @@ public class DateUtilsTest {
 
     @Test
     public void date() {
-        System.out.println(DateUtils.date(new Date()));
+        System.out.println(DateUtils.date());
     }
 }

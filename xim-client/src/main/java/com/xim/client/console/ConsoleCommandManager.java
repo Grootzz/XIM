@@ -13,17 +13,22 @@ import java.util.Scanner;
  * @author noodle
  * @date 2019/6/24 20:48
  */
-public class ConsoleCommandManager implements ConsoleCommand{
+public class ConsoleCommandManager implements ConsoleCommand {
 
     /**
      * 命令-->命令处理器
      */
     private Map<String, ConsoleCommand> consoleCommandMap;
 
+    /**
+     * 当前控制台命令
+     */
+    private ConsoleCommand currentConsoleCommand;
+
     public ConsoleCommandManager() {
         consoleCommandMap = new HashMap<>();
 
-//        consoleCommandMap.put("login",new LoginConsoleCommand());
+        consoleCommandMap.put("login",new LoginConsoleCommand());
         consoleCommandMap.put(":logout", new LogoutConsoleCommand());
         consoleCommandMap.put(":cg", new CreateGroupConsoleCommand());
         consoleCommandMap.put(":jg", new JoinGroupConsoleCommand());
@@ -36,19 +41,58 @@ public class ConsoleCommandManager implements ConsoleCommand{
     @Override
     public void exec(Scanner scanner, Channel channel) {
 
+        System.out.print(">");
         //  获取第一个指令
-        String command = scanner.next();
+        //String command = scanner.next();
+        String consoleIn = scanner.nextLine();
+//
+//        if (consoleIn == null || consoleIn.length() == 0 || consoleIn.split(" ").length == 0) {
+//            continue;
+//        }
+
 
         if (!LoginUtil.hasLogin(channel)) {
             return;
         }
 
-        ConsoleCommand consoleCommand = consoleCommandMap.get(command);
+        ConsoleCommand consoleCommand = consoleCommandMap.get(consoleIn);
 
         if (consoleCommand != null) {
             consoleCommand.exec(scanner, channel);
         } else {
-            System.err.println("无法识别[" + command + "]指令，请重新输入!");
+            System.err.println("无法识别[" + consoleIn + "]指令，请重新输入!");
         }
     }
+
+    @Override
+    public void exec(String statement, Channel channel) {
+
+        if (containsCmd(statement)) {
+            currentConsoleCommand.exec(statement, channel);
+        } else {
+            System.err.println("无法识别[" + statement + "]指令，请重新输入!");
+        }
+    }
+
+    /**
+     * 命令解析
+     *
+     * @param cmdstr
+     * @return
+     */
+    public boolean containsCmd(String cmdstr) {
+
+        String[] strings = cmdstr.split(" ");
+
+        // 获取命令
+        String cmd = strings[0];
+
+        if (consoleCommandMap.get(cmd) != null) {
+            currentConsoleCommand = consoleCommandMap.get(cmd);
+            return true;
+        }
+
+        return false;
+    }
+
 }

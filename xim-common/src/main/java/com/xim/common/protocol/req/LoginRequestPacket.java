@@ -17,6 +17,13 @@ public class LoginRequestPacket extends Packet {
 
     private String password;
 
+    public LoginRequestPacket() {
+    }
+
+    public LoginRequestPacket(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
 
     @Override
     public Byte getCommand() {

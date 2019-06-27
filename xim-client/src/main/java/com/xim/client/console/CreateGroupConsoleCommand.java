@@ -29,4 +29,9 @@ public class CreateGroupConsoleCommand implements ConsoleCommand {
         createGroupRequestPacket.setUserIdList(Arrays.asList(userIds.split(USER_ID_DELIMITER)));
         channel.writeAndFlush(createGroupRequestPacket);
     }
+
+    @Override
+    public void exec(String statement, Channel channel) {
+
+    }
 }

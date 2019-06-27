@@ -21,4 +21,15 @@ public class SendToUserConsoleCommand implements ConsoleCommand{
         String message = scanner.next();
         channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
     }
+
+    @Override
+    public void exec(String statement, Channel channel) {
+
+
+
+//        String toUserId = scanner.next();
+//        String message = scanner.next();
+//        channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
+
+    }
 }

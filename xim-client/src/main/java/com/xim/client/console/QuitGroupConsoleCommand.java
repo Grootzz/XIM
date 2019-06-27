@@ -24,4 +24,9 @@ public class QuitGroupConsoleCommand implements ConsoleCommand {
 
         channel.writeAndFlush(quitGroupRequestPacket);
     }
+
+    @Override
+    public void exec(String statement, Channel channel) {
+
+    }
 }

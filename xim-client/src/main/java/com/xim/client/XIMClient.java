@@ -113,13 +113,21 @@ public class XIMClient {
 
             /* 接收控制台命令 */
             while (!Thread.interrupted()) {
-                //System.out.print("~>");
-                if (!LoginUtil.hasLogin(channel)) {
-                    loginConsoleCommand.exec(scanner, channel);
-                } else {
-                    consoleCommandManager.exec(scanner, channel);
+//                if (!LoginUtil.hasLogin(channel)) {
+//                    loginConsoleCommand.exec(scanner, channel);
+//                } else {
+//                    consoleCommandManager.exec(scanner, channel);
+//                }
+
+                System.out.print(">");
+                String stmt = scanner.nextLine();
+
+                if (stmt == null || stmt.length() == 0 || stmt.split(" ").length == 0) {
+                    continue;
                 }
+
                 //consoleCommandManager.exec(scanner, channel);
+                consoleCommandManager.exec(stmt, channel);
             }
         }).start();
     }
