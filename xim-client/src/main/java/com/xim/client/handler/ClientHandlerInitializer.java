@@ -33,6 +33,8 @@ public class ClientHandlerInitializer extends ChannelInitializer<SocketChannel> 
         pipeline.addLast(new Spliter());
         // 添加Packet解码器
         pipeline.addLast(new PacketDecoder());
+        // 注册响应处理器
+        pipeline.addLast(new RegisterResponseHandler());
         // 添加登录响应处理器
         pipeline.addLast(new LoginResponseHandler());
         // 添加消息响应处理器

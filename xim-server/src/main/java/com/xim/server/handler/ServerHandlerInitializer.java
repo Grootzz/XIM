@@ -28,6 +28,8 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         pipeline.addLast(new Spliter());
         // Packet解码器
         pipeline.addLast(new PacketDecoder());
+        // 注册请求处理器
+        pipeline.addLast(new RegisterRequestHandler());
         // 登录请求处理器
         pipeline.addLast(new LoginRequestHandler());
         // 心跳请求处理器

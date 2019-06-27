@@ -11,4 +11,8 @@ public class IDUtil {
     public static String randomId() {
         return UUID.randomUUID().toString().split("-")[0];
     }
+
+    public static String token() {
+        return UUID.randomUUID().toString();
+    }
 }

@@ -48,8 +48,8 @@ public class JedisUtils {
         Jedis jedis = pool.getResource();
         String val = JSON.toJSONString(value);
         jedis.set(key, val);
-
         jedis.close();
+
     }
 
     public static <T> T get(String key, Class<T> clazz) {
@@ -74,13 +74,23 @@ public class JedisUtils {
         return result;
     }
 
-
+    /**
+     * 删除
+     */
     public static boolean delete(String key) {
         Jedis jedis = pool.getResource();
 
         Long del = jedis.del(key);
         jedis.close();
         return del > 0;
+    }
+
+    public static boolean exist(String key){
+        Jedis jedis = pool.getResource();
+
+        Boolean exists = jedis.exists(key);
+        jedis.close();
+        return exists;
     }
 
 }

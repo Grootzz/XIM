@@ -28,7 +28,8 @@ public class ConsoleCommandManager implements ConsoleCommand {
     public ConsoleCommandManager() {
         consoleCommandMap = new HashMap<>();
 
-        consoleCommandMap.put("login",new LoginConsoleCommand());
+        consoleCommandMap.put(":reg", new RegisterConsoleCommand());
+        consoleCommandMap.put(":login", new LoginConsoleCommand());
         consoleCommandMap.put(":logout", new LogoutConsoleCommand());
         consoleCommandMap.put(":cg", new CreateGroupConsoleCommand());
         consoleCommandMap.put(":jg", new JoinGroupConsoleCommand());
@@ -42,15 +43,7 @@ public class ConsoleCommandManager implements ConsoleCommand {
     public void exec(Scanner scanner, Channel channel) {
 
         System.out.print(">");
-        //  获取第一个指令
-        //String command = scanner.next();
         String consoleIn = scanner.nextLine();
-//
-//        if (consoleIn == null || consoleIn.length() == 0 || consoleIn.split(" ").length == 0) {
-//            continue;
-//        }
-
-
         if (!LoginUtil.hasLogin(channel)) {
             return;
         }
@@ -76,9 +69,6 @@ public class ConsoleCommandManager implements ConsoleCommand {
 
     /**
      * 命令解析
-     *
-     * @param cmdstr
-     * @return
      */
     public boolean containsCmd(String cmdstr) {
 

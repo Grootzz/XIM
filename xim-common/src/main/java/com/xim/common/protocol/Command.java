@@ -96,4 +96,14 @@ public interface Command {
      * 心跳检测请求响应命令
      */
     Byte HEARTBEAT_RESPONSE = 18;
+
+    /**
+     * 注册请求命令
+     */
+    Byte REGISTER_REQUEST = 19;
+
+    /**
+     * 注册请求响应命令
+     */
+    Byte REGISTER_RESPONSE = 20;
 }
