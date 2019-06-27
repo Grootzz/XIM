@@ -33,5 +33,30 @@ public class CreateGroupConsoleCommand implements ConsoleCommand {
     @Override
     public void exec(String statement, Channel channel) {
 
+        String trim = statement.trim();
+        String[] strings = trim.split(" ");
+
+        if (strings.length < 2) {
+            logger.info("输入参数个数错误");
+            return;
+        }
+
+        int start = trim.indexOf(" ");
+        String stringWithoutCommandTmp = trim.substring(start);
+        String stringWithoutCommand = stringWithoutCommandTmp.trim();
+
+        System.out.println(Arrays.asList(stringWithoutCommand.split(USER_ID_DELIMITER)));
+        CreateGroupRequestPacket createGroupRequestPacket = new CreateGroupRequestPacket();
+
+        createGroupRequestPacket.setUserIdList(Arrays.asList(stringWithoutCommand.split(USER_ID_DELIMITER)));
+
+        channel.writeAndFlush(createGroupRequestPacket);
+    }
+
+    /**
+     * 解析命令表达式
+     */
+    private String[] parse(String statement) {
+        return null;
     }
 }
