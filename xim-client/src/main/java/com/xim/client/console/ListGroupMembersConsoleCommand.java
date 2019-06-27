@@ -1,5 +1,6 @@
 package com.xim.client.console;
 
+import com.xim.common.protocol.req.JoinGroupRequestPacket;
 import com.xim.common.protocol.req.ListGroupMembersRequestPacket;
 import io.netty.channel.Channel;
 
@@ -11,7 +12,7 @@ import java.util.Scanner;
  * @author noodle
  * @date 2019/6/24 21:55
  */
-public class ListGroupMembersConsoleCommand implements ConsoleCommand{
+public class ListGroupMembersConsoleCommand implements ConsoleCommand {
     @Override
     public void exec(Scanner scanner, Channel channel) {
         ListGroupMembersRequestPacket listGroupMembersRequestPacket = new ListGroupMembersRequestPacket();
@@ -25,6 +26,17 @@ public class ListGroupMembersConsoleCommand implements ConsoleCommand{
 
     @Override
     public void exec(String statement, Channel channel) {
+        String trim = statement.trim();
+        String[] strings = trim.split(" ");
 
+        if (strings.length < 2) {
+            logger.info("输入参数个数错误");
+            return;
+        }
+        String groupId = strings[1];
+
+        ListGroupMembersRequestPacket packet = new ListGroupMembersRequestPacket();
+        packet.setGroupId(groupId);
+        channel.writeAndFlush(packet);
     }
 }

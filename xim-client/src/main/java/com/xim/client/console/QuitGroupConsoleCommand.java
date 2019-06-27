@@ -1,5 +1,6 @@
 package com.xim.client.console;
 
+import com.xim.common.protocol.req.ListGroupMembersRequestPacket;
 import com.xim.common.protocol.req.QuitGroupRequestPacket;
 import io.netty.channel.Channel;
 
@@ -27,6 +28,17 @@ public class QuitGroupConsoleCommand implements ConsoleCommand {
 
     @Override
     public void exec(String statement, Channel channel) {
+        String trim = statement.trim();
+        String[] strings = trim.split(" ");
 
+        if (strings.length < 2) {
+            logger.info("输入参数个数错误");
+            return;
+        }
+        String groupId = strings[1];
+
+        QuitGroupRequestPacket packet = new QuitGroupRequestPacket();
+        packet.setGroupId(groupId);
+        channel.writeAndFlush(packet);
     }
 }

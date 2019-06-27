@@ -33,7 +33,7 @@ public class ConsoleCommandManager implements ConsoleCommand {
         consoleCommandMap.put(":cg", new CreateGroupConsoleCommand());
         consoleCommandMap.put(":jg", new JoinGroupConsoleCommand());
         consoleCommandMap.put(":qg", new QuitGroupConsoleCommand());
-        consoleCommandMap.put(":lqm", new ListGroupMembersConsoleCommand());
+        consoleCommandMap.put(":lgm", new ListGroupMembersConsoleCommand());
         consoleCommandMap.put(":pc", new SendToUserConsoleCommand());
         consoleCommandMap.put(":gc", new SendToGroupConsoleCommand());
     }

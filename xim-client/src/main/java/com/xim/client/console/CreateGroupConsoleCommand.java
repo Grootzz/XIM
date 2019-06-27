@@ -45,7 +45,6 @@ public class CreateGroupConsoleCommand implements ConsoleCommand {
         String stringWithoutCommandTmp = trim.substring(start);
         String stringWithoutCommand = stringWithoutCommandTmp.trim();
 
-        System.out.println(Arrays.asList(stringWithoutCommand.split(USER_ID_DELIMITER)));
         CreateGroupRequestPacket createGroupRequestPacket = new CreateGroupRequestPacket();
 
         createGroupRequestPacket.setUserIdList(Arrays.asList(stringWithoutCommand.split(USER_ID_DELIMITER)));
