@@ -16,14 +16,14 @@ public class QuitGroupConsoleCommand implements ConsoleCommand {
     @Override
     public void exec(Scanner scanner, Channel channel) {
 
-        QuitGroupRequestPacket quitGroupRequestPacket = new QuitGroupRequestPacket();
+        QuitGroupRequestPacket requestPacket = new QuitGroupRequestPacket();
 
         System.out.print("输入 groupId，退出群聊：");
         String groupId = scanner.next();
 
-        quitGroupRequestPacket.setGroupId(groupId);
+        requestPacket.setGroupId(groupId);
 
-        channel.writeAndFlush(quitGroupRequestPacket);
+        channel.writeAndFlush(requestPacket);
     }
 
     @Override
@@ -35,10 +35,12 @@ public class QuitGroupConsoleCommand implements ConsoleCommand {
             logger.info("输入参数个数错误");
             return;
         }
+
         String groupId = strings[1];
 
-        QuitGroupRequestPacket packet = new QuitGroupRequestPacket();
-        packet.setGroupId(groupId);
-        channel.writeAndFlush(packet);
+        QuitGroupRequestPacket requestPacket = new QuitGroupRequestPacket();
+        requestPacket.setGroupId(groupId);
+
+        channel.writeAndFlush(requestPacket);
     }
 }
