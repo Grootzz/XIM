@@ -9,7 +9,8 @@ import io.netty.channel.group.ChannelGroup;
 
 /**
  * 加入群聊指令处理器
- *
+ *1. 获取群对应的 channelGroup，然后将当前用户的 channel 添加进去
+ * 2. 构造加群响应发送给客户端
  * @author noodle
  * @date 2019/6/24 21:57
  */
@@ -20,13 +21,20 @@ public class JoinGroupRequestHandler extends SimpleChannelInboundHandler<JoinGro
         // 1. 获取群对应的 channelGroup，然后将当前用户的 channel 添加进去
         String groupId = requestPacket.getGroupId();
         ChannelGroup channelGroup = SessionUtil.getChannelGroup(groupId);
-        channelGroup.add(ctx.channel());
 
-        // 2. 构造加群响应发送给客户端
         JoinGroupResponsePacket responsePacket = new JoinGroupResponsePacket();
-
-        responsePacket.setSuccess(true);
         responsePacket.setGroupId(groupId);
+
+        if (channelGroup == null){
+            responsePacket.setSuccess(false);
+            responsePacket.setReason("该群不存在！");
+        }else {
+            channelGroup.add(ctx.channel());
+            // 2. 构造加群响应发送给客户端
+            responsePacket.setSuccess(true);
+            responsePacket.setReason("加群成功");
+        }
+
         ctx.channel().writeAndFlush(responsePacket);
     }
 }

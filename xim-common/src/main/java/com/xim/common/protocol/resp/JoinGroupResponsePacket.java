@@ -19,7 +19,6 @@ public class JoinGroupResponsePacket extends Packet {
 
     @Override
     public Byte getCommand() {
-
         return Command.JOIN_GROUP_RESPONSE;
     }
 

@@ -34,10 +34,11 @@ public class JoinGroupConsoleCommand implements ConsoleCommand {
             logger.info("输入参数个数错误");
             return;
         }
+
         String groupId = strings[1];
 
-        JoinGroupRequestPacket joinGroupRequestPacket = new JoinGroupRequestPacket();
-        joinGroupRequestPacket.setGroupId(groupId);
-        channel.writeAndFlush(joinGroupRequestPacket);
+        JoinGroupRequestPacket requestPacket = new JoinGroupRequestPacket();
+        requestPacket.setGroupId(groupId);
+        channel.writeAndFlush(requestPacket);
     }
 }
