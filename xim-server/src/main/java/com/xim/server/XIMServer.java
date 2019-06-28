@@ -29,7 +29,7 @@ public class XIMServer {
         System.out.println("****************************************************************");
         System.out.println("*                         启动 XIM 服务端                       *");
         System.out.println("****************************************************************");
-        logger.info("fdfddddddddd");
+
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 

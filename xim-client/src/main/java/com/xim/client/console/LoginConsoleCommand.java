@@ -1,6 +1,7 @@
 package com.xim.client.console;
 
 import com.xim.client.XIMClient;
+import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.req.LoginRequestPacket;
 import io.netty.channel.Channel;
 import io.netty.util.internal.logging.InternalLogger;
@@ -44,7 +45,7 @@ public class LoginConsoleCommand implements ConsoleCommand {
     public void exec(String statement, Channel channel) {
 
         String[] strings = statement.split(" ");
-        if (strings.length != 3){
+        if (strings.length != 3) {
             logger.info("输入参数个数错误");
             return;
         }
@@ -53,12 +54,16 @@ public class LoginConsoleCommand implements ConsoleCommand {
         String username = strings[1];
         String password = strings[2];
 
-        LoginRequestPacket loginRequestPacket = new LoginRequestPacket(username, password);
+        LoginRequestPacket requestPacket = new LoginRequestPacket(username, password);
 
-        // 发送登录数据包
-        channel.writeAndFlush(loginRequestPacket);
-        waitForLoginResponse();
-
+        // 判断用户是否已经登录
+        if (channel.attr(Attributes.LOGON).get() != null) {
+            logger.info("您已经登录，不用重复登录");
+        }else {
+            // 发送登录数据包
+            channel.writeAndFlush(requestPacket);
+            waitForLoginResponse();
+        }
     }
 
     private static void waitForLoginResponse() {

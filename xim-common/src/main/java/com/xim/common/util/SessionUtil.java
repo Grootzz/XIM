@@ -14,17 +14,20 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SessionUtil {
 
-    // userId -> channel 的映射
+    /**
+     * username -> channel 的映射
+     */
     private static final Map<String, Channel> userIdChannelMap = new ConcurrentHashMap<>();
-    // groupId -> channels group
+
+    /**
+     * groupId -> channels group
+     */
     private static final Map<String, ChannelGroup> groupIdChannelGroupMap = new ConcurrentHashMap<>();
 
     /**
      * 绑定channel到userId
      */
     public static void bindSession(Session session, Channel channel) {
-        /*TODO 删除使用getUserId() put */
-        //userIdChannelMap.put(session.getUserId(), channel);
         userIdChannelMap.put(session.getUserName(), channel);
         channel.attr(Attributes.SESSION).set(session);
     }
@@ -52,7 +55,6 @@ public class SessionUtil {
     public static Channel getChannel(String username) {
         return userIdChannelMap.get(username);
     }
-
 
     public static void bindChannelGroup(String groupId, ChannelGroup channelGroup) {
         groupIdChannelGroupMap.put(groupId, channelGroup);

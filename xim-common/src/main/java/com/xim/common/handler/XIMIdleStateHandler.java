@@ -37,7 +37,7 @@ public class XIMIdleStateHandler extends IdleStateHandler {
     @Override
     protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) throws Exception {
 
-        System.out.println(READER_IDLE_TIME + "秒内未读到数据，关闭连接");
+        System.out.println(READER_IDLE_TIME + "秒内未读到数据，关闭连接[" + ctx.channel().id() + "]");
         ctx.channel().close();
     }
 

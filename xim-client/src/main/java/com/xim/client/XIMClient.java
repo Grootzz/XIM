@@ -70,7 +70,6 @@ public class XIMClient {
                 // 获取与服务端关联的channel
                 Channel channel = ((ChannelFuture) future).channel();
                 // 获取控制台输入信息
-//                startConsoleThread(channel);
                 new Thread(new Scan(channel)).start();
             } else if (retry == 0) {
                 System.err.println(DateUtils.date() + " 重试次数已用完，放弃连接！");
@@ -86,32 +85,5 @@ public class XIMClient {
                 eventExecutors.schedule(() -> connect(bootstrap, host, port, retry - 1), delay, TimeUnit.SECONDS);
             }
         });
-    }
-
-    /**
-     * 在客户端连接上服务端之后启动控制台线程，从控制台获取消息，然后发送至服务端
-     */
-    private static void startConsoleThread(Channel channel) {
-
-        new Thread(() -> {
-            ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
-            LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
-
-            Scanner scanner = new Scanner(System.in);
-
-            /* 接收控制台命令 */
-            while (!Thread.interrupted()) {
-
-                //System.out.print(">");
-                String stmt = scanner.nextLine();
-
-                if (stmt == null || stmt.length() == 0 || stmt.split(" ").length == 0) {
-                    continue;
-                }
-
-                //consoleCommandManager.exec(scanner, channel);
-                consoleCommandManager.exec(stmt, channel);
-            }
-        }).start();
     }
 }

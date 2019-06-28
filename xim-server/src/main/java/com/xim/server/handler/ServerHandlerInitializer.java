@@ -22,13 +22,10 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
 
         ChannelPipeline pipeline = ch.pipeline();
 
-        /* inbound handler*/
         // 空闲状态处理器
-        //pipeline.addLast(new XIMIdleStateHandler());
+        pipeline.addLast(new XIMIdleStateHandler());
         // 粘包处理器(inbound)
         pipeline.addLast(new Spliter());
-        // Packet解码器(inbound/outbound)
-        //pipeline.addLast(new PacketDecoder());
         // Packet 编解码器(inbound/outbound)
         pipeline.addLast(new PacketCodecHandler());
         // 注册请求处理器(inbound)
@@ -36,7 +33,7 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         // 登录请求处理器(inbound)
         pipeline.addLast(new LoginRequestHandler());
         // 心跳请求处理器
-        //pipeline.addLast(new HeartBeatRequestHandler());
+        pipeline.addLast(new HeartBeatRequestHandler());
         // 权限处理器(inbound)
         pipeline.addLast(new AuthHandler());
         // 单聊消息请求处理器(inbound)
@@ -51,11 +48,7 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         pipeline.addLast(new ListGroupMembersRequestHandler());
         // 消息群发请求处理器(inbound)
         pipeline.addLast(new GroupMessageRequestHandler());
-        // 登出请求处理器
+        // 登出请求处理器(inbound)
         pipeline.addLast(new LogoutRequestHandler());
-
-        /* outbound handler */
-        //pipeline.addLast(new PacketEncoder());
-
     }
 }

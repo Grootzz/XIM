@@ -25,7 +25,6 @@ public class HeartBeatTimerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("ping...");
         // 定时发送心跳包
         scheduleSendHeartBeat(ctx);
         super.channelActive(ctx);
@@ -35,8 +34,8 @@ public class HeartBeatTimerHandler extends ChannelInboundHandlerAdapter {
         ctx.executor().schedule(() -> {
 
             if (ctx.channel().isActive()) {
-                //ctx.writeAndFlush(new HeartBeatRequestPacket());
-                ctx.channel().writeAndFlush(new HeartBeatRequestPacket());
+                ctx.writeAndFlush(new HeartBeatRequestPacket());
+                //ctx.channel().writeAndFlush(new HeartBeatRequestPacket());
                 scheduleSendHeartBeat(ctx);
             }
 

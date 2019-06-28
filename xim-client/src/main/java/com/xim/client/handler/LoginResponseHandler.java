@@ -1,15 +1,12 @@
 package com.xim.client.handler;
 
-import com.xim.common.protocol.req.LoginRequestPacket;
+import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.resp.LoginResponsePacket;
 import com.xim.common.session.Session;
 import com.xim.common.util.LoginUtil;
 import com.xim.common.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * LoginResponsePacket handler
@@ -19,37 +16,18 @@ import java.util.UUID;
  */
 public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginResponsePacket> {
 
-    /**
-     * channel 建立连接时回调
-     * 在连接建立时向服务端发送登录数据
-     */
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-
-        // 创建登录对象
-        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-        loginRequestPacket.setUserId(UUID.randomUUID().toString());
-        loginRequestPacket.setUserName("admin");
-        loginRequestPacket.setPassword("admin");
-
-        // 向服务端写登录数据
-        // ctx.channel().writeAndFlush(loginRequestPacket);
-    }
-
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket responsePacket) throws Exception {
-        /*TODO 不使用userId*/
-        String userId = responsePacket.getUserId();
         String userName = responsePacket.getUserName();
 
         if (responsePacket.isSuccess()) {
-            /* TODO */
-            //System.out.println("[" + userName + "]登录成功，userId 为: " + responsePacket.getUserId());
+
             System.out.println("[" + userName + "]登录成功");
 
             // 标记 channel 完成登录
-            LoginUtil.markAsLogin(ctx.channel());
-            SessionUtil.bindSession(new Session(userId, userName), ctx.channel());
+            //LoginUtil.markAsLogin(ctx.channel());
+            ctx.channel().attr(Attributes.LOGON).set(true);
+            //SessionUtil.bindSession(new Session(userName), ctx.channel());
 
         } else {
             System.out.println("[" + userName + "]登录失败，原因：" + responsePacket.getReason());
