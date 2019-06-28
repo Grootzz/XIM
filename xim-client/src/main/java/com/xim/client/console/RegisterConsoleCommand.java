@@ -12,10 +12,6 @@ import java.util.Scanner;
  * @date 2019/6/27 21:18
  */
 public class RegisterConsoleCommand implements ConsoleCommand {
-    @Override
-    public void exec(Scanner scanner, Channel channel) {
-
-    }
 
     @Override
     public void exec(String statement, Channel channel) {

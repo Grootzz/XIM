@@ -1,6 +1,8 @@
 package com.xim.client.console;
 
+import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.req.CreateGroupRequestPacket;
+import com.xim.common.protocol.req.JoinGroupRequestPacket;
 import io.netty.channel.Channel;
 
 import java.util.Arrays;
@@ -20,17 +22,6 @@ public class CreateGroupConsoleCommand implements ConsoleCommand {
     private static final String USER_ID_DELIMITER = ",";
 
     @Override
-    public void exec(Scanner scanner, Channel channel) {
-
-        CreateGroupRequestPacket createGroupRequestPacket = new CreateGroupRequestPacket();
-
-        System.out.print("【拉人群聊】输入 userId 列表，userId 之间英文逗号隔开：");
-        String usernameList = scanner.next();
-        createGroupRequestPacket.setUsernameList(Arrays.asList(usernameList.split(USER_ID_DELIMITER)));
-        channel.writeAndFlush(createGroupRequestPacket);
-    }
-
-    @Override
     public void exec(String statement, Channel channel) {
 
         String trim = statement.trim();
@@ -45,11 +36,15 @@ public class CreateGroupConsoleCommand implements ConsoleCommand {
         String stringWithoutCommandTmp = trim.substring(start);
         String usernameList = stringWithoutCommandTmp.trim();
 
-        CreateGroupRequestPacket createGroupRequestPacket = new CreateGroupRequestPacket();
-
-        createGroupRequestPacket.setUsernameList(Arrays.asList(usernameList.split(USER_ID_DELIMITER)));
-
-        channel.writeAndFlush(createGroupRequestPacket);
+        // 判断用户是否已经登录
+        if (channel.attr(Attributes.LOGON).get() == null) {
+            logger.info("您还未登录，请先登录！");
+        } else {
+            CreateGroupRequestPacket createGroupRequestPacket = new CreateGroupRequestPacket();
+            createGroupRequestPacket.setUsernameList(Arrays.asList(usernameList.split(USER_ID_DELIMITER)));
+            // 发送数据
+            channel.writeAndFlush(createGroupRequestPacket);
+        }
     }
 
     /**

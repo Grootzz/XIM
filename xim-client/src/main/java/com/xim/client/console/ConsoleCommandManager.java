@@ -40,24 +40,6 @@ public class ConsoleCommandManager implements ConsoleCommand {
     }
 
     @Override
-    public void exec(Scanner scanner, Channel channel) {
-
-        System.out.print(">");
-        String consoleIn = scanner.nextLine();
-        if (!LoginUtil.hasLogin(channel)) {
-            return;
-        }
-
-        ConsoleCommand consoleCommand = consoleCommandMap.get(consoleIn);
-
-        if (consoleCommand != null) {
-            consoleCommand.exec(scanner, channel);
-        } else {
-            System.err.println("无法识别[" + consoleIn + "]指令，请重新输入!");
-        }
-    }
-
-    @Override
     public void exec(String statement, Channel channel) {
 
         if (containsCmd(statement)) {

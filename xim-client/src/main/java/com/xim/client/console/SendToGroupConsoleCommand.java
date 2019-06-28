@@ -1,5 +1,6 @@
 package com.xim.client.console;
 
+import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.req.GroupMessageRequestPacket;
 import com.xim.common.protocol.req.MessageRequestPacket;
 import io.netty.channel.Channel;
@@ -13,14 +14,6 @@ import java.util.Scanner;
  * @date 2019/6/25 14:47
  */
 public class SendToGroupConsoleCommand implements ConsoleCommand{
-    @Override
-    public void exec(Scanner scanner, Channel channel) {
-        System.out.print("发送消息给某个某个群组：");
-
-        String toGroupId = scanner.next();
-        String message = scanner.next();
-        channel.writeAndFlush(new GroupMessageRequestPacket(toGroupId, message));
-    }
 
     @Override
     public void exec(String statement, Channel channel) {
@@ -35,10 +28,15 @@ public class SendToGroupConsoleCommand implements ConsoleCommand{
         String[] res = parse(trim);
 
         // 获取输入的用户id和消息
-        String toGroupId = res[0];
+        String groupId = res[0];
         String message = res[1];
 
-        channel.writeAndFlush(new GroupMessageRequestPacket(toGroupId, message));
+        // 判断用户是否已经登录
+        if (channel.attr(Attributes.LOGON).get() == null) {
+            logger.info("您还未登录，请先登录！");
+        } else {
+            channel.writeAndFlush(new GroupMessageRequestPacket(groupId, message));
+        }
     }
 
 

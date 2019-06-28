@@ -1,7 +1,9 @@
 package com.xim.client.console;
 
+import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.req.JoinGroupRequestPacket;
 import com.xim.common.protocol.req.ListGroupMembersRequestPacket;
+import com.xim.common.protocol.req.QuitGroupRequestPacket;
 import io.netty.channel.Channel;
 
 import java.util.Scanner;
@@ -13,16 +15,6 @@ import java.util.Scanner;
  * @date 2019/6/24 21:55
  */
 public class ListGroupMembersConsoleCommand implements ConsoleCommand {
-    @Override
-    public void exec(Scanner scanner, Channel channel) {
-        ListGroupMembersRequestPacket listGroupMembersRequestPacket = new ListGroupMembersRequestPacket();
-
-        System.out.print("输入 groupId，获取群成员列表：");
-        String groupId = scanner.next();
-
-        listGroupMembersRequestPacket.setGroupId(groupId);
-        channel.writeAndFlush(listGroupMembersRequestPacket);
-    }
 
     @Override
     public void exec(String statement, Channel channel) {
@@ -36,8 +28,14 @@ public class ListGroupMembersConsoleCommand implements ConsoleCommand {
 
         String groupId = strings[1];
 
-        ListGroupMembersRequestPacket packet = new ListGroupMembersRequestPacket();
-        packet.setGroupId(groupId);
-        channel.writeAndFlush(packet);
+        // 判断用户是否已经登录
+        if (channel.attr(Attributes.LOGON).get() == null) {
+            logger.info("您还未登录，请先登录！");
+        } else {
+            ListGroupMembersRequestPacket packet = new ListGroupMembersRequestPacket();
+            packet.setGroupId(groupId);
+            // 发送数据
+            channel.writeAndFlush(packet);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.xim.client.handler;
 
+import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.resp.LogoutResponsePacket;
 import com.xim.common.util.SessionUtil;
 import io.netty.channel.ChannelHandler;
@@ -17,7 +18,7 @@ public class LogoutResponseHandler extends SimpleChannelInboundHandler<LogoutRes
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LogoutResponsePacket responsePacket) throws Exception {
 
-        SessionUtil.unBindSession(ctx.channel());
+        ctx.channel().attr(Attributes.LOGON).set(null);
 
         System.out.println(responsePacket.getReason());
     }

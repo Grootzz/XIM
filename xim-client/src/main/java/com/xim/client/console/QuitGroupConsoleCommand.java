@@ -1,5 +1,7 @@
 package com.xim.client.console;
 
+import com.xim.common.attribute.Attributes;
+import com.xim.common.protocol.req.GroupMessageRequestPacket;
 import com.xim.common.protocol.req.ListGroupMembersRequestPacket;
 import com.xim.common.protocol.req.QuitGroupRequestPacket;
 import io.netty.channel.Channel;
@@ -13,18 +15,6 @@ import java.util.Scanner;
  * @date 2019/6/24 21:54
  */
 public class QuitGroupConsoleCommand implements ConsoleCommand {
-    @Override
-    public void exec(Scanner scanner, Channel channel) {
-
-        QuitGroupRequestPacket requestPacket = new QuitGroupRequestPacket();
-
-        System.out.print("输入 groupId，退出群聊：");
-        String groupId = scanner.next();
-
-        requestPacket.setGroupId(groupId);
-
-        channel.writeAndFlush(requestPacket);
-    }
 
     @Override
     public void exec(String statement, Channel channel) {
@@ -38,9 +28,14 @@ public class QuitGroupConsoleCommand implements ConsoleCommand {
 
         String groupId = strings[1];
 
-        QuitGroupRequestPacket requestPacket = new QuitGroupRequestPacket();
-        requestPacket.setGroupId(groupId);
-
-        channel.writeAndFlush(requestPacket);
+        // 判断用户是否已经登录
+        if (channel.attr(Attributes.LOGON).get() == null) {
+            logger.info("您还未登录，请先登录！");
+        } else {
+            QuitGroupRequestPacket requestPacket = new QuitGroupRequestPacket();
+            requestPacket.setGroupId(groupId);
+            // 发送数据
+            channel.writeAndFlush(requestPacket);
+        }
     }
 }

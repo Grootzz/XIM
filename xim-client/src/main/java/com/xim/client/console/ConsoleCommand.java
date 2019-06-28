@@ -14,9 +14,13 @@ import java.util.Scanner;
  */
 public interface ConsoleCommand {
 
-     InternalLogger logger = InternalLoggerFactory.getInstance(ConsoleCommand.class);
+    InternalLogger logger = InternalLoggerFactory.getInstance(ConsoleCommand.class);
 
-    void exec(Scanner scanner, Channel channel);
-
+    /**
+     * 命令执行
+     *
+     * @param statement 从控制台输入的命令表达式
+     * @param channel
+     */
     void exec(String statement, Channel channel);
 }

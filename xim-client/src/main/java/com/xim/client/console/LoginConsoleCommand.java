@@ -1,11 +1,9 @@
 package com.xim.client.console;
 
-import com.xim.client.XIMClient;
 import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.req.LoginRequestPacket;
 import io.netty.channel.Channel;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.InternalLoggerFactory;
+import io.netty.channel.ChannelFuture;
 
 import java.util.Scanner;
 
@@ -16,30 +14,6 @@ import java.util.Scanner;
  * @date 2019/6/24 20:39
  */
 public class LoginConsoleCommand implements ConsoleCommand {
-
-    @Override
-    public void exec(Scanner scanner, Channel channel) {
-        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-
-//        String line = scanner.nextLine();
-//        String[] strings = line.split(" ");
-//
-//        String loginCommand = strings[0];
-//        String username = strings[1];
-//        String pwd = strings[2];
-
-
-        System.out.print("输入用户名登录: ");
-        loginRequestPacket.setUserName(scanner.nextLine());
-        loginRequestPacket.setPassword("admin");
-
-        //loginRequestPacket.setUserName(username);
-        //loginRequestPacket.setPassword(pwd);
-
-        // 发送登录数据包
-        channel.writeAndFlush(loginRequestPacket);
-        waitForLoginResponse();
-    }
 
     @Override
     public void exec(String statement, Channel channel) {
@@ -58,18 +32,16 @@ public class LoginConsoleCommand implements ConsoleCommand {
 
         // 判断用户是否已经登录
         if (channel.attr(Attributes.LOGON).get() != null) {
-            logger.info("您已经登录，不用重复登录");
+            logger.info("您已登录，无需重复登录");
         }else {
             // 发送登录数据包
-            channel.writeAndFlush(requestPacket);
-            waitForLoginResponse();
+            ChannelFuture future =null;
+            try {
+                future = channel.writeAndFlush(requestPacket).sync();
+            } catch (InterruptedException e) {
+                logger.info("您已登录，无需重复登录");
+            }
         }
     }
 
-    private static void waitForLoginResponse() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ignored) {
-        }
-    }
 }

@@ -1,5 +1,6 @@
 package com.xim.client.console;
 
+import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.req.CreateGroupRequestPacket;
 import com.xim.common.protocol.req.JoinGroupRequestPacket;
 import io.netty.channel.Channel;
@@ -14,16 +15,6 @@ import java.util.Scanner;
  * @date 2019/6/24 21:38
  */
 public class JoinGroupConsoleCommand implements ConsoleCommand {
-    @Override
-    public void exec(Scanner scanner, Channel channel) {
-        JoinGroupRequestPacket joinGroupRequestPacket = new JoinGroupRequestPacket();
-
-        System.out.print("输入 groupId，加入群聊：");
-        String groupId = scanner.next();
-
-        joinGroupRequestPacket.setGroupId(groupId);
-        channel.writeAndFlush(joinGroupRequestPacket);
-    }
 
     @Override
     public void exec(String statement, Channel channel) {
@@ -37,8 +28,14 @@ public class JoinGroupConsoleCommand implements ConsoleCommand {
 
         String groupId = strings[1];
 
-        JoinGroupRequestPacket requestPacket = new JoinGroupRequestPacket();
-        requestPacket.setGroupId(groupId);
-        channel.writeAndFlush(requestPacket);
+        // 判断用户是否已经登录
+        if (channel.attr(Attributes.LOGON).get() == null) {
+            logger.info("您还未登录，请先登录！");
+        } else {
+            JoinGroupRequestPacket requestPacket = new JoinGroupRequestPacket();
+            requestPacket.setGroupId(groupId);
+
+            channel.writeAndFlush(requestPacket);
+        }
     }
 }
