@@ -13,6 +13,10 @@ public class IDUtil {
     }
 
     public static String token() {
-        return UUID.randomUUID().toString();
+        return UUID.randomUUID().toString().replace("-","");
+    }
+
+    public static String userId() {
+        return UUID.randomUUID().toString().replace("-","");
     }
 }

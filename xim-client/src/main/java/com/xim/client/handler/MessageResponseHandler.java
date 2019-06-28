@@ -17,10 +17,9 @@ import java.util.Date;
 public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageResponsePacket> {
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, MessageResponsePacket messageResponsePacket) throws Exception {
-        String fromUserId = messageResponsePacket.getFromUserId();
-        String fromUserName = messageResponsePacket.getFromUserName();
-        System.out.println(fromUserId + ":" + fromUserName + " -> " + messageResponsePacket
-                .getMessage());
+    protected void channelRead0(ChannelHandlerContext ctx, MessageResponsePacket responsePacket) throws Exception {
+        //String fromUserId = responsePacket.getFromUserId();
+        String username = responsePacket.getUsername();
+        System.out.println(username + " -> " + responsePacket.getMessage());
     }
 }

@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class XIMServer {
 
+    private static Logger logger = LoggerFactory.getLogger(XIMServer.class);
+
     private static final int PORT = 4444;
 
     public static void main(String[] args) {
@@ -27,7 +29,7 @@ public class XIMServer {
         System.out.println("****************************************************************");
         System.out.println("*                         启动 XIM 服务端                       *");
         System.out.println("****************************************************************");
-
+        logger.info("fdfddddddddd");
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 

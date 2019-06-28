@@ -44,12 +44,29 @@ public class JedisUtils {
     }
 
 
+    public static void set(String key, String value) {
+        Jedis jedis = pool.getResource();
+        jedis.set(key, value);
+        jedis.close();
+    }
+
+
     public static <T> void set(String key, T value) {
         Jedis jedis = pool.getResource();
         String val = JSON.toJSONString(value);
         jedis.set(key, val);
         jedis.close();
 
+    }
+
+    public static String get(String key) {
+        Jedis jedis = pool.getResource();
+
+        String val = jedis.get(key);
+
+        jedis.close();
+
+        return val;
     }
 
     public static <T> T get(String key, Class<T> clazz) {
@@ -85,7 +102,7 @@ public class JedisUtils {
         return del > 0;
     }
 
-    public static boolean exist(String key){
+    public static boolean exist(String key) {
         Jedis jedis = pool.getResource();
 
         Boolean exists = jedis.exists(key);

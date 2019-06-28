@@ -12,21 +12,29 @@ import com.xim.common.protocol.Packet;
  */
 public class MessageRequestPacket extends Packet {
 
-    private String toUserId;
+    private String username;
 
     private String message;
 
     public MessageRequestPacket() {
     }
 
-    public MessageRequestPacket(String toUserId, String message) {
-        this.toUserId = toUserId;
-        this.message = message;
-    }
-
     @Override
     public Byte getCommand() {
         return Command.MESSAGE_REQUEST;
+    }
+
+    public MessageRequestPacket(String username, String message) {
+        this.username = username;
+        this.message = message;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMessage() {
@@ -37,18 +45,10 @@ public class MessageRequestPacket extends Packet {
         this.message = message;
     }
 
-    public String getToUserId() {
-        return toUserId;
-    }
-
-    public void setToUserId(String toUserId) {
-        this.toUserId = toUserId;
-    }
-
     @Override
     public String toString() {
         return "MessageRequestPacket{" +
-                "toUserId='" + toUserId + '\'' +
+                "username='" + username + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }

@@ -7,8 +7,8 @@ public class JedisUtilsTest {
     @Test
     public void set() {
         JedisUtils.set("123", new Boolean(true));
-        Person cax = new Person("cax");
-        JedisUtils.set("cax", cax);
+        JedisUtils.set("a","a");
+        JedisUtils.set("a1",new Person("a1"));
     }
 
     @Test

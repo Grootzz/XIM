@@ -37,18 +37,22 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket loginResponsePacket) throws Exception {
-        String userId = loginResponsePacket.getUserId();
-        String userName = loginResponsePacket.getUserName();
+    protected void channelRead0(ChannelHandlerContext ctx, LoginResponsePacket responsePacket) throws Exception {
+        /*TODO 不使用userId*/
+        String userId = responsePacket.getUserId();
+        String userName = responsePacket.getUserName();
 
-        if (loginResponsePacket.isSuccess()) {
-            System.out.println("[" + userName + "]登录成功，userId 为: " + loginResponsePacket.getUserId());
+        if (responsePacket.isSuccess()) {
+            /* TODO */
+            //System.out.println("[" + userName + "]登录成功，userId 为: " + responsePacket.getUserId());
+            System.out.println("[" + userName + "]登录成功");
 
             // 标记 channel 完成登录
             LoginUtil.markAsLogin(ctx.channel());
             SessionUtil.bindSession(new Session(userId, userName), ctx.channel());
+
         } else {
-            System.out.println("[" + userName + "]登录失败，原因：" + loginResponsePacket.getReason());
+            System.out.println("[" + userName + "]登录失败，原因：" + responsePacket.getReason());
         }
     }
 

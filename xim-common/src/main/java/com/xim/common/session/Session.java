@@ -16,6 +16,10 @@ public class Session {
     public Session() {
     }
 
+    public Session(String userName) {
+        this.userName = userName;
+    }
+
     public Session(String userId, String userName) {
         this.userId = userId;
         this.userName = userName;

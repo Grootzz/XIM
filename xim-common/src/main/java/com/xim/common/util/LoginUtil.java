@@ -3,7 +3,6 @@ package com.xim.common.util;
 import com.xim.common.attribute.Attributes;
 import com.xim.common.redis.JedisUtils;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerAdapter;
 
 /**
  * 登录验证工具

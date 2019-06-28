@@ -26,9 +26,9 @@ public class ClientHandlerInitializer extends ChannelInitializer<SocketChannel> 
 
         /* inbound handler */
         // 空闲检测
-        pipeline.addLast(new XIMIdleStateHandler());
+        //pipeline.addLast(new XIMIdleStateHandler());
         // 心跳检测(注释掉可用于测试服务端设置的读空闲最大时间)
-        pipeline.addLast(new HeartBeatTimerHandler());
+        //pipeline.addLast(new HeartBeatTimerHandler());
         // 添加拆包器
         pipeline.addLast(new Spliter());
         // 添加Packet解码器

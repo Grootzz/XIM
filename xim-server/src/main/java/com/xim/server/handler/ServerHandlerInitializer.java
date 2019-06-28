@@ -3,6 +3,7 @@ package com.xim.server.handler;
 import com.xim.common.codec.PacketDecoder;
 import com.xim.common.codec.PacketEncoder;
 import com.xim.common.codec.Spliter;
+import com.xim.common.handler.PacketCodecHandler;
 import com.xim.common.handler.XIMIdleStateHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -23,35 +24,37 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
 
         /* inbound handler*/
         // 空闲状态处理器
-        pipeline.addLast(new XIMIdleStateHandler());
-        // 粘包处理器
+        //pipeline.addLast(new XIMIdleStateHandler());
+        // 粘包处理器(inbound)
         pipeline.addLast(new Spliter());
-        // Packet解码器
-        pipeline.addLast(new PacketDecoder());
-        // 注册请求处理器
+        // Packet解码器(inbound/outbound)
+        //pipeline.addLast(new PacketDecoder());
+        // Packet 编解码器(inbound/outbound)
+        pipeline.addLast(new PacketCodecHandler());
+        // 注册请求处理器(inbound)
         pipeline.addLast(new RegisterRequestHandler());
-        // 登录请求处理器
+        // 登录请求处理器(inbound)
         pipeline.addLast(new LoginRequestHandler());
         // 心跳请求处理器
-        pipeline.addLast(new HeartBeatRequestHandler());
-        // 权限处理器
+        //pipeline.addLast(new HeartBeatRequestHandler());
+        // 权限处理器(inbound)
         pipeline.addLast(new AuthHandler());
-        // 单聊消息请求处理器
+        // 单聊消息请求处理器(inbound)
         pipeline.addLast(new MessageRequestHandler());
-        // 创建群请求处理器
+        // 创建群请求处理器(inbound)
         pipeline.addLast(new CreateGroupRequestHandler());
-        // 加群请求处理器
+        // 加群请求处理器(inbound)
         pipeline.addLast(new JoinGroupRequestHandler());
-        // 退群请求处理器
+        // 退群请求处理器(inbound)
         pipeline.addLast(new QuitGroupRequestHandler());
-        // 获取群成员请求处理器
+        // 获取群成员请求处理器(inbound)
         pipeline.addLast(new ListGroupMembersRequestHandler());
-        // 消息群发请求处理器
+        // 消息群发请求处理器(inbound)
         pipeline.addLast(new GroupMessageRequestHandler());
         // 登出请求处理器
 
         /* outbound handler */
-        pipeline.addLast(new PacketEncoder());
+        //pipeline.addLast(new PacketEncoder());
 
     }
 }

@@ -11,15 +11,30 @@ import com.xim.common.protocol.Packet;
  */
 public class MessageResponsePacket extends Packet {
 
-    private String fromUserId;
-
-    private String fromUserName;
+    private String username;
 
     private String message;
+
+
+    public MessageResponsePacket() {
+    }
+
+    public MessageResponsePacket(String username, String message) {
+        this.username = username;
+        this.message = message;
+    }
 
     @Override
     public Byte getCommand() {
         return Command.MESSAGE_RESPONSE;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMessage() {
@@ -30,27 +45,10 @@ public class MessageResponsePacket extends Packet {
         this.message = message;
     }
 
-    public String getFromUserId() {
-        return fromUserId;
-    }
-
-    public void setFromUserId(String fromUserId) {
-        this.fromUserId = fromUserId;
-    }
-
-    public String getFromUserName() {
-        return fromUserName;
-    }
-
-    public void setFromUserName(String fromUserName) {
-        this.fromUserName = fromUserName;
-    }
-
     @Override
     public String toString() {
         return "MessageResponsePacket{" +
-                "fromUserId='" + fromUserId + '\'' +
-                ", fromUserName='" + fromUserName + '\'' +
+                "username='" + username + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }

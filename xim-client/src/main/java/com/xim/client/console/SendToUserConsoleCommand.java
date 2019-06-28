@@ -2,9 +2,7 @@ package com.xim.client.console;
 
 import com.xim.common.protocol.req.MessageRequestPacket;
 import io.netty.channel.Channel;
-import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -19,9 +17,9 @@ public class SendToUserConsoleCommand implements ConsoleCommand {
     public void exec(Scanner scanner, Channel channel) {
         System.out.print("发送消息给某个某个用户：");
 
-        String toUserId = scanner.next();
+        String username = scanner.next();
         String message = scanner.next();
-        channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
+        channel.writeAndFlush(new MessageRequestPacket(username, message));
     }
 
     @Override
@@ -38,10 +36,10 @@ public class SendToUserConsoleCommand implements ConsoleCommand {
         String[] res = parse(trim);
 
         // 获取输入的用户id和消息
-        String toUserId = res[0];
+        String username = res[0];
         String message = res[1];
 
-        channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
+        channel.writeAndFlush(new MessageRequestPacket(username, message));
     }
 
     /**

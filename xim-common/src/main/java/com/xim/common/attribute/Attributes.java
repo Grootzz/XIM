@@ -10,6 +10,7 @@ import io.netty.util.AttributeKey;
  * @date 2019/6/23 19:52
  */
 public interface Attributes {
+
     /**
      * channel 登录成功属性key
      */

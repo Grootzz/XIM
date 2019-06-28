@@ -23,7 +23,9 @@ public class SessionUtil {
      * 绑定channel到userId
      */
     public static void bindSession(Session session, Channel channel) {
-        userIdChannelMap.put(session.getUserId(), channel);
+        /*TODO 删除使用getUserId() put */
+        //userIdChannelMap.put(session.getUserId(), channel);
+        userIdChannelMap.put(session.getUserName(), channel);
         channel.attr(Attributes.SESSION).set(session);
     }
 
@@ -47,8 +49,8 @@ public class SessionUtil {
     /**
      * 根据用户获取channel
      */
-    public static Channel getChannel(String userId) {
-        return userIdChannelMap.get(userId);
+    public static Channel getChannel(String username) {
+        return userIdChannelMap.get(username);
     }
 
 
