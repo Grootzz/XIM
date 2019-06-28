@@ -25,8 +25,8 @@ public class CreateGroupConsoleCommand implements ConsoleCommand {
         CreateGroupRequestPacket createGroupRequestPacket = new CreateGroupRequestPacket();
 
         System.out.print("【拉人群聊】输入 userId 列表，userId 之间英文逗号隔开：");
-        String userIds = scanner.next();
-        createGroupRequestPacket.setUserIdList(Arrays.asList(userIds.split(USER_ID_DELIMITER)));
+        String usernameList = scanner.next();
+        createGroupRequestPacket.setUsernameList(Arrays.asList(usernameList.split(USER_ID_DELIMITER)));
         channel.writeAndFlush(createGroupRequestPacket);
     }
 
@@ -43,11 +43,11 @@ public class CreateGroupConsoleCommand implements ConsoleCommand {
 
         int start = trim.indexOf(" ");
         String stringWithoutCommandTmp = trim.substring(start);
-        String stringWithoutCommand = stringWithoutCommandTmp.trim();
+        String usernameList = stringWithoutCommandTmp.trim();
 
         CreateGroupRequestPacket createGroupRequestPacket = new CreateGroupRequestPacket();
 
-        createGroupRequestPacket.setUserIdList(Arrays.asList(stringWithoutCommand.split(USER_ID_DELIMITER)));
+        createGroupRequestPacket.setUsernameList(Arrays.asList(usernameList.split(USER_ID_DELIMITER)));
 
         channel.writeAndFlush(createGroupRequestPacket);
     }

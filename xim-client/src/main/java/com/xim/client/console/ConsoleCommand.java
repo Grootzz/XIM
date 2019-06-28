@@ -1,6 +1,5 @@
 package com.xim.client.console;
 
-import com.xim.client.XIMClient;
 import io.netty.channel.Channel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;

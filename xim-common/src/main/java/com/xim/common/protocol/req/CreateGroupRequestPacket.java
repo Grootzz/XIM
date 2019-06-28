@@ -18,25 +18,25 @@ public class CreateGroupRequestPacket extends Packet {
     /**
      * 群组成员
      */
-    private List<String> userIdList;
+    private List<String> usernameList;
 
     @Override
     public Byte getCommand() {
         return Command.CREATE_GROUP_REQUEST;
     }
 
-    public List<String> getUserIdList() {
-        return userIdList;
+    public List<String> getUsernameList() {
+        return usernameList;
     }
 
-    public void setUserIdList(List<String> userIdList) {
-        this.userIdList = userIdList;
+    public void setUsernameList(List<String> usernameList) {
+        this.usernameList = usernameList;
     }
 
     @Override
     public String toString() {
         return "CreateGroupRequestPacket{" +
-                "userIdList=" + userIdList +
+                "usernameList=" + usernameList +
                 '}';
     }
 }
