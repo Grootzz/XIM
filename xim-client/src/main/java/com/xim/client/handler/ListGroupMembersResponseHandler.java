@@ -12,9 +12,13 @@ import io.netty.util.concurrent.EventExecutorGroup;
  * @author noodle
  * @date 2019/6/24 22:08
  */
-public class ListGroupMembersResponseHandler extends SimpleChannelInboundHandler <ListGroupMembersResponsePacket>{
+public class ListGroupMembersResponseHandler extends SimpleChannelInboundHandler<ListGroupMembersResponsePacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ListGroupMembersResponsePacket responsePacket) throws Exception {
-        System.out.println("群[" + responsePacket.getGroupId() + "]中的人包括：" + responsePacket.getSessionList());
+        if (responsePacket.isSuccess()) {
+            System.out.println("群[" + responsePacket.getGroupId() + "]中的人包括：" + responsePacket.getUsernameList());
+        } else {
+            System.err.println("群[" + responsePacket.getGroupId() + "] INFO：" + responsePacket.getInfo());
+        }
     }
 }

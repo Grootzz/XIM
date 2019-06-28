@@ -18,25 +18,34 @@ import java.util.List;
  * @author noodle
  * @date 2019/6/24 22:02
  */
-public class ListGroupMembersRequestHandler extends SimpleChannelInboundHandler<ListGroupMembersRequestPacket>{
+public class ListGroupMembersRequestHandler extends SimpleChannelInboundHandler<ListGroupMembersRequestPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ListGroupMembersRequestPacket requestPacket) throws Exception {
         // 1. 获取群的 ChannelGroup
         String groupId = requestPacket.getGroupId();
         ChannelGroup channelGroup = SessionUtil.getChannelGroup(groupId);
 
-        // 2. 遍历群成员的 channel，对应的 session，构造群成员的信息
-        List<Session> sessionList = new ArrayList<>();
-        for (Channel channel : channelGroup) {
-            Session session = SessionUtil.getSession(channel);
-            sessionList.add(session);
-        }
-
-        // 3. 构建获取成员列表响应写回到客户端
         ListGroupMembersResponsePacket responsePacket = new ListGroupMembersResponsePacket();
-
         responsePacket.setGroupId(groupId);
-        responsePacket.setSessionList(sessionList);
-        ctx.channel().writeAndFlush(responsePacket);
+
+        // 判断群是否存在
+        if (channelGroup == null) {
+            responsePacket.setSuccess(false);
+            responsePacket.setInfo("该群组不存在，检查群组id是否正确！");
+        } else {
+            // 2. 遍历群成员的 channel，对应的 session，构造群成员的信息
+            List<String> usernameList = new ArrayList<>();
+            for (Channel channel : channelGroup) {
+                Session session = SessionUtil.getSession(channel);
+                usernameList.add(session.getUserName());
+            }
+
+            // 3. 构建获取成员列表响应写回到客户端
+            responsePacket.setSuccess(true);
+            responsePacket.setUsernameList(usernameList);
+            responsePacket.setInfo("成功获取群成员");
+        }
+//        ctx.channel().writeAndFlush(responsePacket);
+        ctx.writeAndFlush(responsePacket);
     }
 }

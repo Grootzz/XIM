@@ -33,6 +33,7 @@ public class ListGroupMembersConsoleCommand implements ConsoleCommand {
             logger.info("输入参数个数错误");
             return;
         }
+
         String groupId = strings[1];
 
         ListGroupMembersRequestPacket packet = new ListGroupMembersRequestPacket();

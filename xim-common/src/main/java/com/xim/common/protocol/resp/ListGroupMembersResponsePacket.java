@@ -12,12 +12,25 @@ import java.util.List;
  * @author noodle
  * @date 2019/6/24 21:49
  */
-public class ListGroupMembersResponsePacket extends Packet{
+public class ListGroupMembersResponsePacket extends Packet {
 
 
     private String groupId;
 
-    private List<Session> sessionList;
+    /**
+     * 用户名列表
+     */
+    private List<String> usernameList;
+
+    /**
+     * 获取的群操作是否成功
+     */
+    private boolean success;
+
+    /**
+     * 附加消息
+     */
+    private String info;
 
     @Override
     public Byte getCommand() {
@@ -33,19 +46,37 @@ public class ListGroupMembersResponsePacket extends Packet{
         this.groupId = groupId;
     }
 
-    public List<Session> getSessionList() {
-        return sessionList;
+    public List<String> getUsernameList() {
+        return usernameList;
     }
 
-    public void setSessionList(List<Session> sessionList) {
-        this.sessionList = sessionList;
+    public void setUsernameList(List<String> usernameList) {
+        this.usernameList = usernameList;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     @Override
     public String toString() {
         return "ListGroupMembersResponsePacket{" +
                 "groupId='" + groupId + '\'' +
-                ", sessionList=" + sessionList +
+                ", usernameList=" + usernameList +
+                ", success=" + success +
+                ", info='" + info + '\'' +
                 '}';
     }
 }
