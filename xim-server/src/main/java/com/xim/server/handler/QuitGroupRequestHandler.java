@@ -33,7 +33,6 @@ public class QuitGroupRequestHandler extends SimpleChannelInboundHandler<QuitGro
             // 2. 构造退群响应发送给客户端
             channelGroup.remove(ctx.channel());
             responsePacket.setSuccess(true);
-            ctx.channel().writeAndFlush(responsePacket);
         }
 
 //        ctx.channel().writeAndFlush(responsePacket);

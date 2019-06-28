@@ -15,7 +15,10 @@ import io.netty.util.concurrent.EventExecutorGroup;
  */
 public class LogoutResponseHandler extends SimpleChannelInboundHandler<LogoutResponsePacket> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LogoutResponsePacket msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, LogoutResponsePacket responsePacket) throws Exception {
+
         SessionUtil.unBindSession(ctx.channel());
+
+        System.out.println(responsePacket.getReason());
     }
 }

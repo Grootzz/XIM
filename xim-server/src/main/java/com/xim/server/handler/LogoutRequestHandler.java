@@ -15,11 +15,16 @@ import io.netty.util.concurrent.EventExecutorGroup;
  * @date 2019/6/24 21:14
  */
 public class LogoutRequestHandler extends SimpleChannelInboundHandler<LogoutRequestPacket> {
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LogoutRequestPacket msg) throws Exception {
         SessionUtil.unBindSession(ctx.channel());
-        LogoutResponsePacket logoutResponsePacket = new LogoutResponsePacket();
-        logoutResponsePacket.setSuccess(true);
-        ctx.channel().writeAndFlush(logoutResponsePacket);
+
+        LogoutResponsePacket responsePacket = new LogoutResponsePacket();
+
+        responsePacket.setSuccess(true);
+        responsePacket.setReason("Logout Done!");
+
+        ctx.writeAndFlush(responsePacket);
     }
 }

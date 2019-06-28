@@ -56,13 +56,13 @@ public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<Creat
         responsePacket.setGroupId(groupId);
         responsePacket.setUserNameList(userNameList);
 
-        // 4. 给每个客户端发送拉群通知
-        channelGroup.writeAndFlush(responsePacket);
-
         logger.info("群创建成功，id 为: " + responsePacket.getGroupId() + ", ");
         logger.info("群里面有：" + responsePacket.getUserNameList());
 
-        // 5. 保存群组相关的信息
+        // 4. 保存群组相关的信息
         SessionUtil.bindChannelGroup(groupId, channelGroup);
+
+        // 5. 给每个客户端发送拉群通知
+        channelGroup.writeAndFlush(responsePacket);
     }
 }

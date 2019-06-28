@@ -52,6 +52,7 @@ public class ServerHandlerInitializer extends ChannelInitializer<NioSocketChanne
         // 消息群发请求处理器(inbound)
         pipeline.addLast(new GroupMessageRequestHandler());
         // 登出请求处理器
+        pipeline.addLast(new LogoutRequestHandler());
 
         /* outbound handler */
         //pipeline.addLast(new PacketEncoder());

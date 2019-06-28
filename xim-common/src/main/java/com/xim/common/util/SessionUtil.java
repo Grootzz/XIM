@@ -34,7 +34,7 @@ public class SessionUtil {
      */
     public static void unBindSession(Channel channel) {
         if (LoginUtil.hasLogin(channel)) {
-            userIdChannelMap.remove(getSession(channel).getUserId());
+            userIdChannelMap.remove(getSession(channel).getUserName());
             LoginUtil.logout(channel);
         }
     }
