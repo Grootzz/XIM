@@ -57,26 +57,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
             responsePacket.setReason("用户名不存在");
         }
 
-
-//        if (valid(requestPacket)) {
-//            logger.info("登录成功!");
-//            responsePacket.setSuccess(true);
-//
-//            // 在redis中标记该channel已经已经经过验证
-//            LoginUtil.markAsLogin(ctx.channel());
-//
-//            String userId = randomUserId();
-//            responsePacket.setUserId(userId);
-//            System.out.println("[" + requestPacket.getUserName() + "]登录成功");
-//            SessionUtil.bindSession(new Session(userId, requestPacket.getUserName()), ctx.channel());
-//        } else {
-//            responsePacket.setReason("账号密码校验失败");
-//            responsePacket.setSuccess(false);
-//            System.out.println(new Date() + ": 登录失败!");
-//        }
-
         // 写数据到客户端: 登录响应
-//        ctx.channel().writeAndFlush(responsePacket);
         ctx.writeAndFlush(responsePacket);
     }
 

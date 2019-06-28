@@ -30,8 +30,7 @@ public class Scan implements Runnable {
         /* 接收控制台命令 */
         while (!Thread.interrupted()) {
 
-
-            //System.out.print(">");
+            System.out.print(">");
             String stmt = scanner.nextLine();
             if (stmt == null || stmt.length() == 0 || stmt.split(" ").length == 0) {
                 continue;

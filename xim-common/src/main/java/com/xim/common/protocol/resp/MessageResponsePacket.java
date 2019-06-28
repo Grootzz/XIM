@@ -15,7 +15,6 @@ public class MessageResponsePacket extends Packet {
 
     private String message;
 
-
     public MessageResponsePacket() {
     }
 

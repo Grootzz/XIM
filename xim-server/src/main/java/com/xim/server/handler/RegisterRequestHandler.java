@@ -42,7 +42,6 @@ public class RegisterRequestHandler extends SimpleChannelInboundHandler<Register
             responsePacket.setReason("您的用户名为: " + username + ", 密码为: " + password);
         }
 
-//        ctx.channel().writeAndFlush(responsePacket);
         ctx.writeAndFlush(responsePacket);
     }
 }

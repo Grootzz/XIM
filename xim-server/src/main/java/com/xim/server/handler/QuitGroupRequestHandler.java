@@ -35,7 +35,6 @@ public class QuitGroupRequestHandler extends SimpleChannelInboundHandler<QuitGro
             responsePacket.setSuccess(true);
         }
 
-//        ctx.channel().writeAndFlush(responsePacket);
         ctx.writeAndFlush(responsePacket);
     }
 }

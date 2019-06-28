@@ -32,8 +32,7 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
 
         // 2.通过消息发送方的会话信息构造要发送的消息
         MessageResponsePacket responsePacket = new MessageResponsePacket();
-        /*TODO comment*/
-        //responsePacket.setFromUserId(session.getUserId());
+
         responsePacket.setUsername(session.getUserName());
         responsePacket.setMessage(requestPacket.getMessage());
 
@@ -41,7 +40,6 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
         Channel channel = SessionUtil.getChannel(requestPacket.getUsername());
 
         // 4.将消息发送给消息接收方
-//        ctx.channel().writeAndFlush(responsePacket);
         if (channel != null && LoginUtil.hasLogin(channel)) {
             channel.writeAndFlush(responsePacket);
         } else {

@@ -45,7 +45,7 @@ public class ListGroupMembersRequestHandler extends SimpleChannelInboundHandler<
             responsePacket.setUsernameList(usernameList);
             responsePacket.setInfo("成功获取群成员");
         }
-//        ctx.channel().writeAndFlush(responsePacket);
+
         ctx.writeAndFlush(responsePacket);
     }
 }
