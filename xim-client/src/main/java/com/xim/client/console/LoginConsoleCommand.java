@@ -16,12 +16,14 @@ import java.util.Scanner;
 public class LoginConsoleCommand implements ConsoleCommand {
 
     @Override
-    public void exec(String statement, Channel channel) {
+    public ChannelFuture exec(String statement, Channel channel) {
+
+        ChannelFuture channelFuture = null;
 
         String[] strings = statement.split(" ");
         if (strings.length != 3) {
             logger.info("输入参数个数错误");
-            return;
+            return null;
         }
 
         // 获取用户名和密码
@@ -33,15 +35,16 @@ public class LoginConsoleCommand implements ConsoleCommand {
         // 判断用户是否已经登录
         if (channel.attr(Attributes.LOGON).get() != null) {
             logger.info("您已登录，无需重复登录");
-        }else {
-            // 发送登录数据包
-            ChannelFuture future =null;
+        } else {
             try {
-                future = channel.writeAndFlush(requestPacket).sync();
+                // 发送登录数据包
+                channelFuture = channel.writeAndFlush(requestPacket).sync();
             } catch (InterruptedException e) {
                 logger.info("您已登录，无需重复登录");
             }
         }
+
+        return channelFuture;
     }
 
 }

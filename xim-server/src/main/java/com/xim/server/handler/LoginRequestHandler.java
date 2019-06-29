@@ -3,10 +3,12 @@ package com.xim.server.handler;
 import com.xim.common.protocol.req.LoginRequestPacket;
 import com.xim.common.protocol.resp.LoginResponsePacket;
 import com.xim.common.redis.JedisUtils;
+import com.xim.common.redis.Prefix;
 import com.xim.common.session.Session;
 import com.xim.common.util.LoginUtil;
 import com.xim.common.util.SessionUtil;
 import com.xim.server.XIMServer;
+import com.xim.server.vo.User;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -37,8 +39,12 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
         responsePacket.setUserName(userName);
 
-        if (JedisUtils.exist(userName)) {
-            if (JedisUtils.get(userName).equals(password)) {
+        if (JedisUtils.exist(Prefix.USER + userName)) {
+
+            User user = JedisUtils.get(Prefix.USER + userName, User.class);
+
+            if (user.getPassword().equals(password)) {
+
                 responsePacket.setSuccess(true);
                 // 在redis中标记该channel已经已经经过验证
                 LoginUtil.markAsLogin(ctx.channel());

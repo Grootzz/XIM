@@ -1,12 +1,9 @@
 package com.xim.client.console;
 
 import com.xim.common.attribute.Attributes;
-import com.xim.common.protocol.req.GroupMessageRequestPacket;
-import com.xim.common.protocol.req.ListGroupMembersRequestPacket;
 import com.xim.common.protocol.req.QuitGroupRequestPacket;
 import io.netty.channel.Channel;
-
-import java.util.Scanner;
+import io.netty.channel.ChannelFuture;
 
 /**
  * 退出群聊命令
@@ -17,13 +14,16 @@ import java.util.Scanner;
 public class QuitGroupConsoleCommand implements ConsoleCommand {
 
     @Override
-    public void exec(String statement, Channel channel) {
+    public ChannelFuture exec(String statement, Channel channel) {
+
+        ChannelFuture channelFuture = null;
+
         String trim = statement.trim();
         String[] strings = trim.split(" ");
 
         if (strings.length < 2) {
             logger.info("输入参数个数错误");
-            return;
+            return null;
         }
 
         String groupId = strings[1];
@@ -35,7 +35,8 @@ public class QuitGroupConsoleCommand implements ConsoleCommand {
             QuitGroupRequestPacket requestPacket = new QuitGroupRequestPacket();
             requestPacket.setGroupId(groupId);
             // 发送数据
-            channel.writeAndFlush(requestPacket);
+            channelFuture = channel.writeAndFlush(requestPacket);
         }
+        return channelFuture;
     }
 }

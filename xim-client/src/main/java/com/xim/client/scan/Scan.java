@@ -3,6 +3,7 @@ package com.xim.client.scan;
 import com.xim.client.console.ConsoleCommandManager;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 
 import java.util.Scanner;
 
@@ -30,11 +31,13 @@ public class Scan implements Runnable {
         /* 接收控制台命令 */
         while (!Thread.interrupted()) {
 
-            System.out.print(">");
             String stmt = scanner.nextLine();
+
+            // 输入预校验
             if (stmt == null || stmt.length() == 0 || stmt.split(" ").length == 0) {
                 continue;
             }
+
             consoleCommandManager.exec(stmt, channel);
         }
     }

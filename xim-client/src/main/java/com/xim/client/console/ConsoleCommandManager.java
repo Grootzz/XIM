@@ -1,11 +1,10 @@
 package com.xim.client.console;
 
-import com.xim.common.util.LoginUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * 控制台命令管理器
@@ -40,13 +39,17 @@ public class ConsoleCommandManager implements ConsoleCommand {
     }
 
     @Override
-    public void exec(String statement, Channel channel) {
+    public ChannelFuture exec(String statement, Channel channel) {
+
+        ChannelFuture channelFuture = null;
 
         if (containsCmd(statement)) {
-            currentConsoleCommand.exec(statement, channel);
+            channelFuture = currentConsoleCommand.exec(statement, channel);
         } else {
             System.err.println("无法识别[" + statement + "]指令，请重新输入!");
         }
+
+        return channelFuture;
     }
 
     /**

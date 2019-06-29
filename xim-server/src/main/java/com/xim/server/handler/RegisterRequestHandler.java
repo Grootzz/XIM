@@ -3,6 +3,7 @@ package com.xim.server.handler;
 import com.xim.common.protocol.req.RegisterRequestPacket;
 import com.xim.common.protocol.resp.RegisterResponsePacket;
 import com.xim.common.redis.JedisUtils;
+import com.xim.common.redis.Prefix;
 import com.xim.common.util.IDUtil;
 import com.xim.server.vo.User;
 import io.netty.channel.ChannelHandlerContext;
@@ -28,15 +29,14 @@ public class RegisterRequestHandler extends SimpleChannelInboundHandler<Register
 
         RegisterResponsePacket responsePacket = new RegisterResponsePacket();
 
-        if (JedisUtils.exist(username)) {
+        if (JedisUtils.exist(Prefix.USER + username)) {
             responsePacket.setSuccess(false);
             responsePacket.setReason("用户名已被注册！");
         } else {
             // 写入redis
-            JedisUtils.set(username, password);
-            // 使用 token 关联用户
-            String token = "token-" + IDUtil.randomId();
-            JedisUtils.set(token, new User(username, password));
+            // JedisUtils.set(username, password);
+            // 存储用户到redis
+            JedisUtils.set(Prefix.USER + username, new User(username, password));
 
             responsePacket.setSuccess(true);
             responsePacket.setReason("您的用户名为: " + username + ", 密码为: " + password);

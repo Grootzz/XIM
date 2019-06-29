@@ -2,6 +2,7 @@ package com.xim.client.console;
 
 import com.xim.common.protocol.req.RegisterRequestPacket;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 
 import java.util.Scanner;
 
@@ -14,12 +15,12 @@ import java.util.Scanner;
 public class RegisterConsoleCommand implements ConsoleCommand {
 
     @Override
-    public void exec(String statement, Channel channel) {
+    public ChannelFuture exec(String statement, Channel channel) {
 
         String[] strings = statement.split(" ");
         if (strings.length != 3) {
             logger.info("输入参数个数错误");
-            return;
+            return null;
         }
 
         // 获取用户名和密码
@@ -30,6 +31,6 @@ public class RegisterConsoleCommand implements ConsoleCommand {
         packet.setUsername(username);
         packet.setPassword(password);
 
-        channel.writeAndFlush(packet);
+        return channel.writeAndFlush(packet);
     }
 }

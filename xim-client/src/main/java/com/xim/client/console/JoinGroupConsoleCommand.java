@@ -4,6 +4,7 @@ import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.req.CreateGroupRequestPacket;
 import com.xim.common.protocol.req.JoinGroupRequestPacket;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -17,13 +18,16 @@ import java.util.Scanner;
 public class JoinGroupConsoleCommand implements ConsoleCommand {
 
     @Override
-    public void exec(String statement, Channel channel) {
+    public ChannelFuture exec(String statement, Channel channel) {
+
+        ChannelFuture channelFuture = null;
+
         String trim = statement.trim();
         String[] strings = trim.split(" ");
 
         if (strings.length < 2) {
             logger.info("输入参数个数错误");
-            return;
+            return null;
         }
 
         String groupId = strings[1];
@@ -35,7 +39,9 @@ public class JoinGroupConsoleCommand implements ConsoleCommand {
             JoinGroupRequestPacket requestPacket = new JoinGroupRequestPacket();
             requestPacket.setGroupId(groupId);
 
-            channel.writeAndFlush(requestPacket);
+            channelFuture = channel.writeAndFlush(requestPacket);
         }
+
+        return channelFuture;
     }
 }

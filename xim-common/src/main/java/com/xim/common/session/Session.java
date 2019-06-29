@@ -1,5 +1,8 @@
 package com.xim.common.session;
 
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * 用户session
  *
@@ -12,6 +15,11 @@ public class Session {
     private String userId;
 
     private String userName;
+
+    /**
+     * 用于存储用于所加入的群
+     */
+    private Set<String> joinedGroups = ConcurrentHashMap.newKeySet();
 
     public Session() {
     }
@@ -39,6 +47,15 @@ public class Session {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+
+    public Set<String> getJoinedGroups() {
+        return joinedGroups;
+    }
+
+    public void setJoinedGroups(Set<String> joinedGroups) {
+        this.joinedGroups = joinedGroups;
     }
 
     @Override

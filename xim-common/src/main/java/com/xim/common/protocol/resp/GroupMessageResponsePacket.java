@@ -2,7 +2,6 @@ package com.xim.common.protocol.resp;
 
 import com.xim.common.protocol.Command;
 import com.xim.common.protocol.Packet;
-import com.xim.common.session.Session;
 
 /**
  * 发送消息到群的请求响应数据包
@@ -10,11 +9,11 @@ import com.xim.common.session.Session;
  * @author noodle
  * @date 2019/6/25 14:51
  */
-public class GroupMessageResponsePacket extends Packet{
+public class GroupMessageResponsePacket extends Packet {
 
-    private String fromGroupId;
+    private String groupId;
 
-    private Session fromUser;
+    private String username;
 
     private String message;
 
@@ -23,20 +22,20 @@ public class GroupMessageResponsePacket extends Packet{
         return Command.GROUP_MESSAGE_RESPONSE;
     }
 
-    public String getFromGroupId() {
-        return fromGroupId;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void setFromGroupId(String fromGroupId) {
-        this.fromGroupId = fromGroupId;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
-    public Session getFromUser() {
-        return fromUser;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFromUser(Session fromUser) {
-        this.fromUser = fromUser;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMessage() {
@@ -50,8 +49,8 @@ public class GroupMessageResponsePacket extends Packet{
     @Override
     public String toString() {
         return "GroupMessageResponsePacket{" +
-                "fromGroupId='" + fromGroupId + '\'' +
-                ", fromUser=" + fromUser +
+                "groupId='" + groupId + '\'' +
+                ", username='" + username + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }

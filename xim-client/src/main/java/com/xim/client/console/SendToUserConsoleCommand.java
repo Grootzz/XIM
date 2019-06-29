@@ -16,14 +16,16 @@ import java.util.Scanner;
 public class SendToUserConsoleCommand implements ConsoleCommand {
 
     @Override
-    public void exec(String statement, Channel channel) {
+    public ChannelFuture exec(String statement, Channel channel) {
+
+        ChannelFuture channelFuture = null;
 
         String trim = statement.trim();
         String[] strings = trim.split(" ");
 
         if (strings.length < 3) {
             logger.info("输入参数个数错误");
-            return;
+            return null;
         }
 
         String[] res = parse(trim);
@@ -36,8 +38,9 @@ public class SendToUserConsoleCommand implements ConsoleCommand {
         if (channel.attr(Attributes.LOGON).get() == null) {
             logger.info("您还未登录，请先登录！");
         } else {
-            channel.writeAndFlush(new MessageRequestPacket(username, message));
+            channelFuture = channel.writeAndFlush(new MessageRequestPacket(username, message));
         }
+        return channelFuture;
     }
 
     /**

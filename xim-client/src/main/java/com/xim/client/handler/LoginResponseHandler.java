@@ -25,12 +25,12 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
             // 标记 channel 完成登录
             ctx.channel().attr(Attributes.LOGON).set(true);
         } else {
-            System.out.println("[" + userName + "]登录失败，原因：" + responsePacket.getReason());
+            System.err.println("[" + userName + "]登录失败，原因：" + responsePacket.getReason());
         }
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("客户端连接被关闭!");
+        System.err.println("客户端连接被关闭!");
     }
 }

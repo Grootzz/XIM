@@ -21,12 +21,15 @@ public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<Grou
         String groupId = requestPacket.getToGroupId();
 
         GroupMessageResponsePacket responsePacket = new GroupMessageResponsePacket();
-        responsePacket.setFromGroupId(groupId);
+        responsePacket.setGroupId(groupId);
         responsePacket.setMessage(requestPacket.getMessage());
-        responsePacket.setFromUser(SessionUtil.getSession(ctx.channel()));
+        responsePacket.setUsername(SessionUtil.getSession(ctx.channel()).getUserName());
+
+
 
         // 2. 拿到群聊对应的 channelGroup，写到每个客户端
         ChannelGroup channelGroup = SessionUtil.getChannelGroup(groupId);
+
         channelGroup.writeAndFlush(responsePacket);
     }
 }
