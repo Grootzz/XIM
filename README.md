@@ -63,3 +63,6 @@ jar -jar xim-client/target xim-client-1.0-SNAPSHOT.jar
 ## TODO
 
 - [ ] db层使用MYSQL，让数据可以持久化 
+- [ ] server使用zookeeper管理，防止server宕机时系统瘫痪
+- [ ] server中增加对系统的监控，将数据缓存于redis中
+- [ ] 丰富系统功能，提供友好交互
