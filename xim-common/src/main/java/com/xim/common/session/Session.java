@@ -11,13 +11,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Session {
 
-    // 用户唯一性标识
+    /**
+     * 用户唯一性标识
+     */
     private String userId;
 
     private String userName;
 
     /**
-     * 用于存储用于所加入的群
+     * 用于存储用户所加入的群
      */
     private Set<String> joinedGroups = ConcurrentHashMap.newKeySet();
 
