@@ -2,11 +2,8 @@ package com.xim.client.console;
 
 import com.xim.common.attribute.Attributes;
 import com.xim.common.protocol.req.GroupMessageRequestPacket;
-import com.xim.common.protocol.req.MessageRequestPacket;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-
-import java.util.Scanner;
 
 /**
  * 发送消息到群组命令

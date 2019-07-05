@@ -4,8 +4,6 @@ import com.xim.common.protocol.req.RegisterRequestPacket;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 
-import java.util.Scanner;
-
 /**
  * 控制台注册命令处理
  *

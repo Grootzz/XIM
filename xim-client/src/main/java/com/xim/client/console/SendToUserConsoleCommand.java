@@ -5,8 +5,6 @@ import com.xim.common.protocol.req.MessageRequestPacket;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 
-import java.util.Scanner;
-
 /**
  * 单聊命令
  *

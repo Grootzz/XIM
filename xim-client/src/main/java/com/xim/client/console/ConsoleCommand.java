@@ -5,8 +5,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
-import java.util.Scanner;
-
 /**
  * 控制台命令接口
  *

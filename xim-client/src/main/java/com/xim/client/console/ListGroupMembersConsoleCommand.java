@@ -1,13 +1,9 @@
 package com.xim.client.console;
 
 import com.xim.common.attribute.Attributes;
-import com.xim.common.protocol.req.JoinGroupRequestPacket;
 import com.xim.common.protocol.req.ListGroupMembersRequestPacket;
-import com.xim.common.protocol.req.QuitGroupRequestPacket;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-
-import java.util.Scanner;
 
 /**
  * 获取群成员命令
