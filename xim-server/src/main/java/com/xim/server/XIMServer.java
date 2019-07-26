@@ -3,6 +3,7 @@ package com.xim.server;
 import com.xim.common.util.DateUtils;
 import com.xim.server.handler.ServerHandlerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -45,24 +46,31 @@ public class XIMServer {
                     .childOption(ChannelOption.TCP_NODELAY, true) // 开启 Nagle 算法（用于流量控制）
                     .childHandler(new ServerHandlerInitializer());
 
-            bind(bootstrap, PORT);
+            // start server
+            ChannelFuture future = bind(bootstrap, PORT);
+            // wait util the server socket is closed.
+            future.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
-            //bossGroup.shutdownGracefully();
-            //workerGroup.shutdownGracefully();
+            // shutdown all event loop to terminate all threads.
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
         }
     }
 
     /**
      * 绑定端口
      */
-    private static void bind(ServerBootstrap bootstrap, int port) {
-        bootstrap.bind(port) // 绑定端口
+    private static ChannelFuture bind(ServerBootstrap bootstrap, int port) throws InterruptedException {
+        ChannelFuture channelFuture = bootstrap.bind(port) // 绑定端口
                 .addListener(future -> {
                     if (future.isSuccess()) {
                         System.out.println(DateUtils.date() + " 服务器启动成功, 端口[" + port + "]");
                     } else {
                         System.err.println(DateUtils.date() + " 服务器启动失败, 端口[" + port + "]");
                     }
-                });
+                }).sync();
+        return channelFuture;
     }
 }

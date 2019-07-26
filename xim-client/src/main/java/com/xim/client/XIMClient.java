@@ -1,7 +1,5 @@
 package com.xim.client;
 
-import com.xim.client.console.ConsoleCommandManager;
-import com.xim.client.console.LoginConsoleCommand;
 import com.xim.client.handler.ClientHandlerInitializer;
 import com.xim.client.scan.Scan;
 import com.xim.common.util.DateUtils;
@@ -15,7 +13,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 /**
