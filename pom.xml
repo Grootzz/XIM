@@ -21,7 +21,7 @@
         <redis.version>2.9.3</redis.version>
         <pool.version>1.6</pool.version>
         <lombok.version>1.16.12</lombok.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <maven.test.skip>true</maven.test.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
